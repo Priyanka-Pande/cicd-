@@ -7,9 +7,27 @@ def authorise_and_generate_token(phone_number,otp):
     user = is_already_user(phone_number)
     if user is None:
         user = create_app_user(phone_number)
-        accountinfo = None
+        accountinfo =  {
+        "id" : "",
+        "full_name" : "",
+        "profile_pic" : "",
+        "age" : "",
+        "gender" : "",
+        "state" : "",
+        "user_type" : "",
+        "organization_name" :"",
+        "profile_type" : ""
+        }
     else:
         accountinfo = get_user_profile_data(user.id,user.type) if user.type else None
+        if  user.type == 'P':
+            accountinfo['organization_name'] = ""
+            accountinfo['profile_type'] = ""
+        else :
+            accountinfo['age'] = ""
+            accountinfo['gender'] = ""
+            accountinfo['state'] = ""
+
     # Refresh token
     refresh_token = RefreshToken.for_user(user)
 
