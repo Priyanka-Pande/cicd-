@@ -2,6 +2,7 @@ import uuid
 from django.db import models
 from functools import partial
 from Users.models import PersonalProfile, ProfessionalProfile
+from AppGluco.validator import validate_file_extension
 
 # Create your models here.
 
@@ -13,7 +14,7 @@ def get_unique_profile_video(instance, filename):
 class VideoTable(models.Model):
     id = models.AutoField(primary_key=True)
     profile_id = models.ForeignKey(PersonalProfile, on_delete=models.CASCADE, db_column='profile')
-    video_file = models.FileField(upload_to=partial(get_unique_profile_video))
+    video_file = models.FileField(upload_to=partial(get_unique_profile_video),validators=[validate_file_extension])
     created_on = models.DateTimeField(auto_now_add=True,null=True)
     updated_on = models.DateTimeField(auto_now_add=True,null=True)
 

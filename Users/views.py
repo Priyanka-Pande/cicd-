@@ -8,6 +8,7 @@ from rest_framework_simplejwt.views import TokenViewBase
 from Users.serializers import CustomTokenRefreshSerializer
 from Users.Service.service import *
 from Users.Data.data import is_profile_exsits_data
+from Users.validator import validate_file_extension
 
 # Create your views here.
 
@@ -32,26 +33,31 @@ class LoginAPI(APIView):
         logger.info('request for phone_number: %s', phone_number)
         if not phone_number:
             logger.critical("phone_number  is required")
-            return Response("Phone Number is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Phone Number is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not otp :
             logger.critical("OTP is required")
-            return Response("OTP is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"OTP is required"}, status=status.HTTP_400_BAD_REQUEST)
         try:
             parsed_number = phonenumbers.parse(phone_number, None)
         except phonenumbers.NumberParseException as e:
             logger.critical("Country code is missing")
-            return Response("Country code required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Country code required"}, status=status.HTTP_400_BAD_REQUEST)
         if not phonenumbers.is_valid_number(parsed_number):
             logger.critical("phone_number is not valid")
-            return Response("Phone Number is Valid", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Phone Number is not Valid"}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            response = authorise_and_generate_token(phone_number,otp)
-            logger.info('Response sent for phone_number: %s', phone_number)
-            return Response(response, status=status.HTTP_200_OK)
+            verified = verify_otp(phone_number,otp)
+            if verified: 
+                response = authorise_and_generate_token(phone_number,otp)
+                logger.info('Response sent for phone_number: %s', phone_number)
+                return Response(response, status=status.HTTP_200_OK)
+            else:
+                logger.critical("otp is not valid")
+                return Response({"message":"OTP is not Valid"}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
             logger.info('Response failed for phone_number: %s and Error is: %s',
                         phone_number, e)
-            return Response("Something Went Wrong", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class ProfessionalProfile(APIView):
@@ -70,16 +76,22 @@ class ProfessionalProfile(APIView):
         logger.info('request for action profile for user_id: %s', user_id)
         if not full_name:
             logger.critical("full_name  is required")
-            return Response("Full Name is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Full Name is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not organization_name:
             logger.critical("organization_name  is required")
-            return Response("Organization Name is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Organization Name is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not profile_type:
             logger.critical("profile_type  is required")
-            return Response("Profile Type is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Profile Type is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not state:
             logger.critical("state is required")
-            return Response("State is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"State is required"}, status=status.HTTP_400_BAD_REQUEST)
+        if profile_pic is not None:
+            try:
+                validate_file_extension(profile_pic)
+            except Exception as e:
+                logger.critical("image format is not valid , Exception %s",e)
+                return Response({"message":"Image format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         profile_data = {"user_id":user_id,"full_name":full_name,"organization_name":organization_name,
             "profile_type":profile_type,"profile_pic":profile_pic,
             "age":age,"gender":gender,"state":state}
@@ -96,7 +108,7 @@ class ProfessionalProfile(APIView):
         except Exception as e:
             logger.info('Response failed to create profile for user_id: %s and Error is: %s',
                         user_id, e)
-            return Response("Something Went Wrong", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class PersonalProfile(APIView):
@@ -114,19 +126,25 @@ class PersonalProfile(APIView):
         logger.info('request for action profile for user_id: %s', user_id)
         if not full_name:
             logger.critical("full_name  is required")
-            return Response("Full Name is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Full Name is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not contact_number:
             logger.critical("contact_number  is required")
-            return Response("Contact Number is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Contact Number is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not age:
             logger.critical("age  is required")
-            return Response("Age Type is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Age Type is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not state:
             logger.critical("state is required")
-            return Response("State is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"State is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not gender:
             logger.critical("gender is required")
-            return Response("Gender is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Gender is required"}, status=status.HTTP_400_BAD_REQUEST)
+        if profile_pic is not None:
+            try:
+                validate_file_extension(profile_pic)
+            except Exception as e:
+                logger.critical("image format is not valid , Exception %s",e)
+                return Response({"message":"Image format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         profile_data = {"user_id":user_id,"full_name":full_name,"profile_pic":profile_pic,
             "age":age,"gender":gender,"state":state,"contact_number":contact_number,"tester_type":2}
         try:
@@ -142,7 +160,7 @@ class PersonalProfile(APIView):
         except Exception as e:
             logger.info('Response failed to create profile for user_id: %s and Error is: %s',
                         user_id, e)
-            return Response("Something Went Wrong", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class AccountInfo(APIView):
@@ -158,7 +176,7 @@ class AccountInfo(APIView):
             return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
             logger.error("User: Error in Accounts Info for user: %s is: %s", request.user.id, e)
-            return Response({"error": "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"message": "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 
 class CreatePatient(APIView):
@@ -175,33 +193,64 @@ class CreatePatient(APIView):
         logger.info('request for action profile for user_id: %s', user_id)
         if not full_name:
             logger.critical("full_name  is required")
-            return Response("Full Name is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Full Name is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not age:
             logger.critical("age  is required")
-            return Response("Age Type is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Age Type is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not state:
             logger.critical("state is required")
-            return Response("State is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"State is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not gender:
             logger.critical("gender is required")
-            return Response("Gender is required", status=status.HTTP_400_BAD_REQUEST)
+            return Response({"message":"Gender is required"}, status=status.HTTP_400_BAD_REQUEST)
         if contact_number:
             try:
                 parsed_number = phonenumbers.parse(contact_number, None)
             except phonenumbers.NumberParseException as e:
                 logger.critical("Country code is missing")
-                return Response("Country code required", status=status.HTTP_400_BAD_REQUEST)
+                return Response({"message":"Country code required"}, status=status.HTTP_400_BAD_REQUEST)
             if not phonenumbers.is_valid_number(parsed_number):
                 logger.critical("contact_number is not valid")
-                return Response("Phone Number is Valid", status=status.HTTP_400_BAD_REQUEST)
+                return Response({"message":"Phone Number is Valid"}, status=status.HTTP_400_BAD_REQUEST)
         profile_data = {"full_name":full_name,"age":age,"gender":gender,"state":state,
             "contact_number":contact_number}
         try:
             user_type = 'P'
+            is_exists = is_patient_already_exists(contact_number,user_id)
+            if is_exists:
+                logger.critical("Patient Already added")
+                return Response({"message" : "Patient Already Added"}, status=status.HTTP_400_BAD_REQUEST)
             response = create_patient(user_id,user_type,profile_data)
             logger.info('Response sent to create profile for user_id: %s', user_id)
             return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
             logger.info('Response failed to create profile for user_id: %s and Error is: %s',
                         user_id, e)
-            return Response("Something Went Wrong", status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class GenerateOTP(APIView):
+
+    def post(self, request):
+        data = request.data
+        phone_number = data.get('phone_number')
+        logger.info('request for phone_number: %s', phone_number)
+        if not phone_number:
+            logger.critical("phone_number  is required")
+            return Response({"message":"Phone Number is required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            parsed_number = phonenumbers.parse(phone_number, None)
+        except phonenumbers.NumberParseException as e:
+            logger.critical("Country code is missing")
+            return Response({"message": "Country code required"}, status=status.HTTP_400_BAD_REQUEST)
+        if not phonenumbers.is_valid_number(parsed_number):
+            logger.critical("phone_number is not valid")
+            return Response({"message": "Phone Number is Valid"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            response = {"message":"OTP Send Successfully"}
+            logger.info('Response sent for phone_number: %s', phone_number)
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.info('Response failed for phone_number: %s and Error is: %s',
+                        phone_number, e)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
