@@ -1,8 +1,10 @@
 asgiref==3.7.2
+boto==2.49.0
 Django==4.2.2
 django-environ==0.10.0
 django-phonenumber-field==7.1.0
 django-phonenumbers==1.0.1
+django-storages==1.13.2
 djangorestframework==3.14.0
 djangorestframework-simplejwt==5.2.2
 phonenumbers==8.13.15

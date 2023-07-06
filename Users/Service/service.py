@@ -1,6 +1,7 @@
 from rest_framework_simplejwt.tokens import RefreshToken
 from Users.Data.data import is_already_user, create_app_user, get_user_profile_data, \
-    create_user_profile_data, is_profile_exsits_data, create_patient_user_data
+    create_user_profile_data, is_profile_exsits_data, create_patient_user_data,\
+        is_patient_already_exists_data
 
 def authorise_and_generate_token(phone_number,otp):
     user = is_already_user(phone_number)
@@ -21,7 +22,7 @@ def authorise_and_generate_token(phone_number,otp):
 
 def create_user_profile(user_type,profile_data):
     profile =  create_user_profile_data(user_type,profile_data)
-    return "Profile Created Successfully"
+    return {"message":"Profile Created Successfully"}
 
 def create_user_using_patient(phone_number,user_type):
     user = is_already_user(phone_number)
@@ -46,7 +47,7 @@ def create_patient(user,user_type,profile_data):
         profile_data['user_id'] = user_id
     profile_data['profile_id'] = profile
     patient = create_user_profile_data(user_type,profile_data)
-    return 'Patient Created Successfully'
+    return {"message":'Patient Created Successfully'}
 
 
 def update_personal_user_profile(profile,user_type,profile_data):
@@ -61,4 +62,21 @@ def update_personal_user_profile(profile,user_type,profile_data):
         profile.organization_name = profile_data['organization_name']
         profile.profile_type = profile_data['profile_type']
     profile.save()
-    return "Profile Updated Successfully"
+    return {"message":"Profile Updated Successfully"}
+
+
+def verify_otp(phone_number,otp):
+    opt_check = '1234'
+
+    if opt_check == otp:
+        return True 
+    else:
+        return False
+
+
+def is_patient_already_exists(phone_number,user):
+    profile = is_profile_exsits_data(user.id,user.type)
+    patient_user_id = is_already_user(phone_number)
+    is_exists = is_patient_already_exists_data(patient_user_id,profile)
+    return is_exists
+
