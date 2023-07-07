@@ -93,8 +93,7 @@ class ProfessionalProfile(APIView):
                 logger.critical("image format is not valid , Exception %s",e)
                 return Response({"message":"Image format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         profile_data = {"user_id":user_id,"full_name":full_name,"organization_name":organization_name,
-            "profile_type":profile_type,"profile_pic":profile_pic,
-            "age":age,"gender":gender,"state":state}
+            "profile_type":profile_type,"profile_pic":profile_pic,"state":state}
         try:
             user_type = 'MR'
             profile = is_profile_exsits_data(user_id,user_type)
