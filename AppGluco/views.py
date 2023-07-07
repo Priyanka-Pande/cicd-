@@ -47,22 +47,23 @@ class UploadVideo(APIView):
 
     def post(self, request):
         data = request.data
-        patient_id = data.get('patient_id')
-        video_file = request.FILES.get('video_file')
-        logger.info('request for patient_id: %s', patient_id)
-        if not patient_id:
-            logger.critical("patient_id  is required")
-            return Response({"message":"Patient Id is required"}, status=status.HTTP_400_BAD_REQUEST)
-        if not video_file:
-            logger.critical("video_file  is required")
-            return Response({"message":"Video File is required"}, status=status.HTTP_400_BAD_REQUEST)
+        patient_id = 0
+        # patient_id = data.get('patient_id')
+        # video_file = request.FILES.get('video_file')
+        # logger.info('request for patient_id: %s', patient_id)
+        # if not patient_id:
+        #     logger.critical("patient_id  is required")
+        #     return Response({"message":"Patient Id is required"}, status=status.HTTP_400_BAD_REQUEST)
+        # if not video_file:
+        #     logger.critical("video_file  is required")
+        #     return Response({"message":"Video File is required"}, status=status.HTTP_400_BAD_REQUEST)
+        # try:
+        #     validate_file_extension(video_file)
+        # except Exception as e:
+        #     logger.critical("Video Format is not valid , Exception %s",e)
+        #     return Response({"message":"Video format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         try:
-            validate_file_extension(video_file)
-        except Exception as e:
-            logger.critical("Video Format is not valid , Exception %s",e)
-            return Response({"message":"Video format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
-        try:
-            response = upload_video_for_patient(patient_id,video_file)
+            response = upload_video_for_patient(patient_id,'video_file')
             logger.info('Response sent for patient_id: %s', patient_id)
             return Response(response, status=status.HTTP_200_OK)
         except Exception as e:
