@@ -5,28 +5,15 @@ from Users.Data.data import is_already_user, create_app_user, get_user_profile_d
 
 def authorise_and_generate_token(phone_number,otp):
     user = is_already_user(phone_number)
+    is_exists = False
+    user_type = ""
     if user is None:
         user = create_app_user(phone_number)
-        accountinfo =  {
-        "id" : "",
-        "full_name" : "",
-        "profile_pic" : "",
-        "age" : "",
-        "gender" : "",
-        "state" : "",
-        "user_type" : "",
-        "organization_name" :"",
-        "profile_type" : ""
-        }
     else:
-        accountinfo = get_user_profile_data(user.id,user.type) if user.type else None
-        if  user.type == 'P':
-            accountinfo['organization_name'] = ""
-            accountinfo['profile_type'] = ""
-        else :
-            accountinfo['age'] = ""
-            accountinfo['gender'] = ""
-            accountinfo['state'] = ""
+        if user.type is not None:
+            is_exists = True
+            user_type = user.type
+
 
     # Refresh token
     refresh_token = RefreshToken.for_user(user)
@@ -34,7 +21,9 @@ def authorise_and_generate_token(phone_number,otp):
     return {
     'refresh': str(refresh_token),
     'access': str(refresh_token.access_token),
-    'accountinfo' : accountinfo
+    'is_exists' : is_exists,
+    "user_id" : user.id,
+    "user_type" :user_type,
     }
 
 
@@ -71,10 +60,10 @@ def create_patient(user,user_type,profile_data):
 def update_personal_user_profile(profile,user_type,profile_data):
     profile.full_name = profile_data['full_name']
     profile.profile_pic = profile_data['profile_pic']
-    profile.age = profile_data['age']
-    profile.gender = profile_data['gender']
     profile.state = profile_data['state']
     if user_type == 'P':
+        profile.age = profile_data['age']
+        profile.gender = profile_data['gender']
         profile.contact_number = profile_data['contact_number']
     else:
         profile.organization_name = profile_data['organization_name']
