@@ -20,7 +20,7 @@ def get_report_for_personal(user):
 
 def upload_video_for_patient(patient_id,video_file):
     # video = upload_video_file(patient_id,video_file)
-    yolo_model = torch.hub.load('ultralytics/yolov5', 'custom', path='/Users/mac/Desktop/GlucoQr/GlucoQr/QrModel/yolo_model.pt', force_reload=True)
+    yolo_model = torch.hub.load('ultralytics/yolov5', 'custom', path='../../../models/yolo_model.pt', force_reload=True)
     sec = 0
     frameRate = 0.116  # //it will capture image in each 0.5 second
     count = 1
