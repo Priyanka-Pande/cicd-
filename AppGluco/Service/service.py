@@ -19,7 +19,7 @@ def get_report_for_personal(user):
     return patients
 
 
-def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cModel,v2final_predictions):
+def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cModel):
     global roi
     # Update the path where video is stored
     vidcap = cv2.VideoCapture(
@@ -85,45 +85,43 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
 def upload_video_for_patient(patient_id,video_file,user):
     video = upload_video_file(patient_id,video_file)
     video_name = get_video_name_of_patient(patient_id,video.id)
-    yolo_model = torch.hub.load('ultralytics/yolov5', 'custom', path='../../../models/yolo_model.pt', force_reload=True)
+    video_file_name = str(video_name.video_file)
+    yolo_model = torch.hub.load('ultralytics/yolov5', 'custom', path='/home/gqrp1_preprod/gqrp1_preprod/models/yolo_model.pt', force_reload=True)
     sec = 0
     frameRate = 0.116  # //it will capture image in each 0.5 second
     count = 1
-
     labels = ['nan', 'Class_60_80', 'Class_80_100', 'Class_100_120', 'Class_120_140', 'Class_140_180',
           'Class_180_220', 'Class_220_280', 'Class_280_650']
-    
+
     final_predictions = []
     x_test = []
-    cModel = load_model('../../../models/Classification_modelV3normalized.h5')
+    cModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/Classification_modelV3normalized.h5')
     # get video id as .mp4
-    video_uid= video_name.video_file
+    video_uid=  video_file_name
     while sec < 7:
         count = count + 1
 
-        feature = getFrame(sec, count, video_uid, x_test, yolo_model,final_predictions, cModel,v2final_predictions)
+        feature = getFrame(sec, count, video_uid, x_test, yolo_model,final_predictions, cModel)
         sec = sec + frameRate
         sec = round(sec, 2)
 
-    print("COUNT:", count)
     # ------------Resnet Model Prediction-------------#
     x_test = np.array(x_test)
     x_test = x_test.reshape(len(x_test), 36, 64, 3)
     # ------------Resnet YOlO Model V2 Prediction-------------#
-    v2final_predictions = np.array(v2final_predictions)
-    v2final_predictions = v2final_predictions.reshape(len(v2final_predictions))
-    v2final_predictions = np.bincount(v2final_predictions).argmax()
-    final_prediction_labelsV2 = labels[v2final_predictions]
-    print("The mean value is V2:", v2final_predictions)
+ #  v2final_predictions = np.array(v2final_predictions)
+ #  v2final_predictions = v2final_predictions.reshape(len(v2final_predictions))
+ #  v2final_predictions = np.bincount(v2final_predictions).argmax()
+ #  final_prediction_labelsV2 = labels[v2final_predictions]
+ #   print("The mean value is V2:", v2final_predictions)
 
     # ------------Resnet YOlO Model Prediction-------------#
     final_predictions = np.array(final_predictions)
     final_predictions = final_predictions.reshape(len(final_predictions))
     final_prediction = np.bincount(final_predictions).argmax()
     final_prediction_labels = labels[final_prediction]
-    print("The mean value is normalised:", final_prediction)
     if (final_prediction == 1):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class1.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class1.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 80, 2)
@@ -131,7 +129,7 @@ def upload_video_for_patient(patient_id,video_file,user):
         # Insert query for inserting gluco value mapped in rRrediction_mean
         insert_reading = insert_gluco_value_for_patient(user,patient_id,video,rRrediction_mean)
     elif (final_prediction == 2):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class2.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class2.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 100, 2)
@@ -139,7 +137,7 @@ def upload_video_for_patient(patient_id,video_file,user):
         # Insert query for inserting gluco value mapped in rRrediction_mean
         insert_reading = insert_gluco_value_for_patient(user,patient_id,video,rRrediction_mean)
     elif (final_prediction == 3):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class3.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class3.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 120, 2)
@@ -147,7 +145,7 @@ def upload_video_for_patient(patient_id,video_file,user):
         # Insert query for inserting gluco value mapped in rRrediction_mean
         insert_reading = insert_gluco_value_for_patient(user,patient_id,video,rRrediction_mean)
     elif (final_prediction == 4):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class4.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class4.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 140, 2)
@@ -155,7 +153,7 @@ def upload_video_for_patient(patient_id,video_file,user):
         # Insert query for inserting gluco value mapped in rRrediction_mean
         insert_reading = insert_gluco_value_for_patient(user,patient_id,video,rRrediction_mean)
     elif (final_prediction == 5):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class5.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class5.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 180, 2)
@@ -163,7 +161,7 @@ def upload_video_for_patient(patient_id,video_file,user):
         # Insert query for inserting gluco value mapped in rRrediction_mean
         insert_reading = insert_gluco_value_for_patient(user,patient_id,video,rRrediction_mean)
     elif (final_prediction == 6):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class6.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class6.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 220, 2)
@@ -171,7 +169,7 @@ def upload_video_for_patient(patient_id,video_file,user):
         # Insert query for inserting gluco value mapped in rRrediction_mean
         insert_reading = insert_gluco_value_for_patient(user,patient_id,video,rRrediction_mean)
     elif (final_prediction == 7):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class7.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class7.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 280, 2)
@@ -180,7 +178,7 @@ def upload_video_for_patient(patient_id,video_file,user):
         insert_reading = "INSERT INTO GlucoQR_Reading (ScanID, AppUserID, BalancedData, UnbalancedData,BalancedClasses) VALUES (%s,%s,%s,%s,%s)"
         insert_reading = insert_gluco_value_for_patient(user,patient_id,video,rRrediction_mean)
     elif (final_prediction == 8):
-        rYoloModel = load_model('../../../models/resnetV3normalized_class8.h5', compile=False)
+        rYoloModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class8.h5', compile=False)
         rYoloModel.compile(optimizer='adam', loss='mean_squared_error')
         rPredictions = rYoloModel.predict(x_test)
         rRrediction_mean = round(rPredictions.mean() * 650, 2)
