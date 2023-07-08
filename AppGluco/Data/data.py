@@ -1,6 +1,6 @@
 from django.db.models import F
 from AppGluco.models import GlucoResultTable, VideoTable
-from Users.Data.data import get_patient_data
+from Users.Data.data import get_patient_data,is_profile_exsits_data
 
 def get_all_patients_of_professional_data(profile_id):
     return GlucoResultTable.objects.values(
@@ -34,4 +34,26 @@ def upload_video_file(patient_id,video_file):
     return VideoTable.objects.create(
         profile_id = profile_id,
         video_file = video_file,
+    )
+
+
+def get_video_name_of_patient(patient_id,video_id):
+    profile_id = get_patient_data(patient_id)
+    return VideoTable.objects.filter(
+        profile_id = profile_id,
+        id = video_id,
+    ).first()
+
+
+def insert_gluco_value_for_patient(user,patient_id,video_id,value):
+    if user.type == 'MR':
+        profile_id = is_profile_exsits_data(user.id,user.type)
+    else:
+        profile_id = None
+    patient_id = get_patient_data(patient_id)
+    return GlucoResultTable.objects.create(
+        profile_id = profile_id,
+        patient_id = patient_id,
+        gluco_value = value,
+        video_location = video_id
     )
