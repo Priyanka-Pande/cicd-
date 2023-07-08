@@ -10,6 +10,7 @@ contourpy==1.1.0
 cycler==0.11.0
 Django==4.2.2
 django-environ==0.10.0
+django-pandas==0.6.6
 django-phonenumber-field==7.1.0
 django-phonenumbers==1.0.1
 django-storages==1.13.2
