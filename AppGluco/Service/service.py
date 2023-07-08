@@ -23,7 +23,7 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
     global roi
     # Update the path where video is stored
     vidcap = cv2.VideoCapture(
-        "http://34.93.60.221/" + video_uid)
+        "https://storage.googleapis.com/glucoqr-p1-preprod/" + video_uid)
     vidcap.set(cv2.CAP_PROP_POS_MSEC, sec * 1000)
     hasFrames, image = vidcap.read()
 

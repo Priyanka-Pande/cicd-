@@ -3,6 +3,7 @@ import environ
 import logging.config
 from pathlib import Path
 from datetime import timedelta
+from google.oauth2 import service_account
 
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -190,3 +191,10 @@ logging.config.dictConfig({
         },
     },
 })
+
+GS_BUCKET_NAME = env('GS_BUCKET_NAME')
+GS_PROJECT_ID = env('GS_PROJECT_ID')
+GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
+    '/home/gqrp1_preprod/gqrp1_preprod/credentials/glucoqr-baff2fb7ba02.json'
+)
+DEFAULT_FILE_STORAGE = env('DEFAULT_FILE_STORAGE')
