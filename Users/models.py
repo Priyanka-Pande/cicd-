@@ -18,7 +18,7 @@ class Users(AbstractUser):
     id = models.AutoField(primary_key=True)
     phone_number = PhoneNumberField(null=False, blank=False, unique=True)
     role = models.CharField(max_length=10, default='User', choices=USER_ROLES, null=True)
-    type = models.CharField(max_length=2,choices=USER_TYPE_CHOICES, null=True,blank=True)
+    type = models.CharField(max_length=2,default='P',choices=USER_TYPE_CHOICES, null=True,blank=True)
     status = models.CharField(max_length=1, default='A', choices=USER_STATUS, null=True)
     created_on = models.DateTimeField(auto_now_add=True,null=True)
     updated_on = models.DateTimeField(auto_now_add=True,null=True)

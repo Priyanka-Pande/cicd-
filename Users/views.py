@@ -187,7 +187,6 @@ class CreatePatient(APIView):
         full_name = data.get('full_name')
         age = data.get('age')
         gender = data.get('gender')
-        state = data.get('state')
         contact_number = data.get('contact_number')
         logger.info('request for action profile for user_id: %s', user_id)
         if not full_name:
@@ -196,9 +195,6 @@ class CreatePatient(APIView):
         if not age:
             logger.critical("age  is required")
             return Response({"message":"Age Type is required"}, status=status.HTTP_400_BAD_REQUEST)
-        if not state:
-            logger.critical("state is required")
-            return Response({"message":"State is required"}, status=status.HTTP_400_BAD_REQUEST)
         if not gender:
             logger.critical("gender is required")
             return Response({"message":"Gender is required"}, status=status.HTTP_400_BAD_REQUEST)
@@ -211,14 +207,18 @@ class CreatePatient(APIView):
             if not phonenumbers.is_valid_number(parsed_number):
                 logger.critical("contact_number is not valid")
                 return Response({"message":"Phone Number is Valid"}, status=status.HTTP_400_BAD_REQUEST)
-        profile_data = {"full_name":full_name,"age":age,"gender":gender,"state":state,
-            "contact_number":contact_number}
+        profile_data = {"full_name":full_name,"age":age,"gender":gender,"contact_number":contact_number}
         try:
             user_type = 'P'
-            is_exists = is_patient_already_exists(contact_number,user_id)
-            if is_exists:
-                logger.critical("Patient Already added")
-                return Response({"message" : "Patient Already Added"}, status=status.HTTP_400_BAD_REQUEST)
+            if contact_number:
+                is_exists = is_patient_already_exists(contact_number,user_id)
+                if is_exists:
+                    logger.critical("Patient Already added")
+                    response = {
+                        "message" : "Patient Already Added",
+                        "patient_id" : is_exists.id
+                    }
+                    return Response(response, status=status.HTTP_400_BAD_REQUEST)
             response = create_patient(user_id,user_type,profile_data)
             logger.info('Response sent to create profile for user_id: %s', user_id)
             return Response(response, status=status.HTTP_200_OK)

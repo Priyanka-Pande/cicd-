@@ -33,10 +33,10 @@ def create_user_profile(user_type,profile_data):
 
 def create_user_using_patient(phone_number,user_type):
     user = is_already_user(phone_number)
-    if user:
-        return user
-    else:
+    if user == None:
         return create_patient_user_data(phone_number,user_type)
+    else:
+        return user
 
 def create_patient(user,user_type,profile_data):
     profile = is_profile_exsits_data(user.id,user.type)
@@ -45,16 +45,24 @@ def create_patient(user,user_type,profile_data):
         profile_data['user_id'] = None
     else:
         user_id = create_user_using_patient(profile_data['contact_number'],user_type)
+        if user_id.type == 'MR':
+            return {"message":'Already Professional User Exsists'}
         patient = is_profile_exsits_data(user_id.id,user_id.type)
         if patient:
             patient.profile_id = profile
             patient.save()
-            return 'Patient Added Successfully'
+            return {
+                "message":'Patient Added Successfully',
+                "patient_id" : patient.id
+                }
         profile_data['tester_type'] = 1
         profile_data['user_id'] = user_id
     profile_data['profile_id'] = profile
-    patient = create_user_profile_data(user_type,profile_data)
-    return {"message":'Patient Created Successfully'}
+    patient_id = create_user_profile_data(user_type,profile_data)
+    return {
+        "message":'Patient Created Successfully',
+        "patient_id" : patient_id.id
+        }
 
 
 def update_personal_user_profile(profile,user_type,profile_data):
@@ -84,6 +92,9 @@ def verify_otp(phone_number,otp):
 def is_patient_already_exists(phone_number,user):
     profile = is_profile_exsits_data(user.id,user.type)
     patient_user_id = is_already_user(phone_number)
-    is_exists = is_patient_already_exists_data(patient_user_id,profile)
+    if patient_user_id is not None:
+        is_exists = is_patient_already_exists_data(patient_user_id,profile)
+    else:
+        is_exists = False
     return is_exists
 
