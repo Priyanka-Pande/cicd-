@@ -88,7 +88,7 @@ def dashboard_home(request):
                     user, e)
         
         # Render the initial HTML page with an empty form
-        # return TemplateResponse(request, './Dashboard/home.html',response)
+        return TemplateResponse(request, 'login.html')
 
 
 @login_required(login_url='/admin/login/')
