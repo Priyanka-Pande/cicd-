@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'Users',
     'AppGluco',
+    'Dashboard',
     'rest_framework',
     'rest_framework_simplejwt',
 ]
@@ -53,7 +54,9 @@ ROOT_URLCONF = 'GlucoQr.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [
+            BASE_DIR / 'templates'
+        ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

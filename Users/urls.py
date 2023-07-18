@@ -1,5 +1,6 @@
 from .views import *
 from django.urls import path
+from Dashboard.views import DeleteAccountRequest
 from rest_framework_simplejwt.views import TokenVerifyView
 
 
@@ -12,4 +13,5 @@ urlpatterns = [
     path('accounts/', AccountInfo.as_view(), name='accounts_info'),
     path('patient/create/', CreatePatient.as_view(), name='create_patient'),
     path('generateOtp/', GenerateOTP.as_view(), name='generate_otp'),
+    path('request/deleteAccount/', DeleteAccountRequest.as_view(), name='test'),
 ]
