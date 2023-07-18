@@ -1,0 +1,67 @@
+{% extends 'index.html' %}
+{% block title %} Admin Login {% endblock %}
+{% block content %}
+<div class="bg-gray-100">
+    <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+        <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md rounded-lg">
+            <div class="text-center">
+                <h2 class="text-3xl font-semibold text-gray-800">Dashboard Login</h2>
+                {% if messages %}
+                    <div id="message-container" class="fixed top-5 right-5 z-50">
+                        {% for message in messages %}
+                            <div id="message" class="px-4 py-2 rounded-md shadow-md mb-4 
+                                {% if message.tags == 'success' %}
+                                    bg-green-500 text-white
+                                {% elif message.tags == 'error' %}
+                                    bg-red-500 text-white
+                                {% endif %}">
+                                    {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <script>
+                        setTimeout(function () {
+                        closeMessage();
+                        }, 5000);
+
+                        function closeMessage() {
+                        var messageContainer = document.getElementById("message-container");
+                        if (messageContainer) {
+                            messageContainer.remove();
+                        }
+                        }
+                    </script>
+                {% endif %}
+            </div>
+            <form class="mt-8 space-y-6" method="POST">
+                <div class="rounded-md shadow-sm -space-y-px">
+                    <div>
+                        <label for="email" class="sr-only">Username</label>
+                        <input id="username" name="username" type="text" autocomplete="email" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Username">
+                    </div>
+                    <div>
+                        <label for="password" class="sr-only">Password</label>
+                        <input id="password" name="password" type="password" class="appearance-none rounded-none relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="Password">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-between">
+                    <div class="flex items-center">
+                    </div>
+
+                    <div class="text-sm">
+                        <a href="#" class="font-medium text-indigo-600 hover:text-indigo-500">
+                        </a>
+                    </div>
+                </div>
+
+                <div>
+                    <button type="submit" class="w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                        Log in
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
