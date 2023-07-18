@@ -104,7 +104,9 @@ def upload_video_for_patient(patient_id,video_file,user):
         feature = getFrame(sec, count, video_uid, x_test, yolo_model,final_predictions, cModel)
         sec = sec + frameRate
         sec = round(sec, 2)
-
+    print('-------------------------')
+    print(f'Count {count}')
+    print('-------------------------')
     # ------------Resnet Model Prediction-------------#
     x_test = np.array(x_test)
     x_test = x_test.reshape(len(x_test), 36, 64, 3)
