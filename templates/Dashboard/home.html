@@ -1,0 +1,106 @@
+{% extends 'navbar.html' %}
+{% block title %} Dashboard {% endblock %}
+
+{% block dashcontent %}
+<div class="flex flex-wrap">
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
+        <p class="text-xl font-bold">Total No. of Users</p>
+        <p class="text-xl font-bold">{{total_users}}</p>
+      </div>
+    </div>
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
+        <p class="text-xl font-bold">Total No. of Blocked Users</p>
+        <p class="text-xl font-bold">{{total_blocked_users}}</p>
+      </div>
+    </div>
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
+        <p class="text-xl font-bold">Total No. of Gluco Tests</p>
+        <p class="text-xl font-bold">{{total_tests}}</p>
+      </div>
+    </div>
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
+        <p class="text-xl font-bold">Total No. of Videos</p>
+        <p class="text-xl font-bold">{{total_videos}}</p>
+      </div>
+    </div>
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
+        <p class="text-xl font-bold">Total No. of Pictures</p>
+        <p class="text-xl font-bold">{{total_pictures}}</p>
+      </div>
+    </div>
+</div>
+
+<div class="">
+    <canvas id="usersChart"></canvas>
+</div>
+
+<div class="">
+    <canvas id="testChart"></canvas>
+</div>
+  
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const labels = {{ labels|safe }};
+        const data = {{ users_data|safe }};
+
+        const ctx = document.getElementById('usersChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Users list',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        const labels = {{ labels|safe }};
+        const data = {{ test_data|safe }};
+
+        const ctx = document.getElementById('testChart').getContext('2d');
+        const myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Test Data',
+                    data: data,
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    });
+</script>
+
+{% endblock %}

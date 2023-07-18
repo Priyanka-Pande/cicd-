@@ -206,7 +206,7 @@ class CreatePatient(APIView):
                 return Response({"message":"Country code required"}, status=status.HTTP_400_BAD_REQUEST)
             if not phonenumbers.is_valid_number(parsed_number):
                 logger.critical("contact_number is not valid")
-                return Response({"message":"Phone Number is Valid"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"message":"Phone Number is Not Valid"}, status=status.HTTP_400_BAD_REQUEST)
         profile_data = {"full_name":full_name,"age":age,"gender":gender,"contact_number":contact_number}
         try:
             user_type = 'P'
