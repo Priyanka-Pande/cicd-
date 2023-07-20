@@ -73,10 +73,13 @@ class AdminLoginPage(APIView):
             messages.error(request, 'Something went wrong. Please Try again')
             return TemplateResponse(request, 'login.html')
 
-
+@login_required(login_url='/admin/login/')
+def AdminLogout(request):
+    logout(request)
+    return redirect('/admin/login/')
 
 @login_required(login_url='/admin/login/')
-def dashboard_home(request):
+def DashboardHome(request):
     user = request.user
     logger.info('request for user_id: %s', user)
     try:
@@ -86,12 +89,75 @@ def dashboard_home(request):
     except Exception as e:
         logger.info('Response failed for user_id: %s and Error is: %s',
                     user, e)
-        
         # Render the initial HTML page with an empty form
-        return TemplateResponse(request, 'login.html')
+        messages.error(request, 'Something went wrong. Please Try again')
+        return TemplateResponse(request, './Error404.html')
 
 
 @login_required(login_url='/admin/login/')
-def admin_logout(request):
-    logout(request)
-    return redirect('/admin/login/')
+def ListUserPage(request):
+    user = request.user
+    logger.info('request for user_id: %s', user)
+    try:
+        response = users_list_table(request)
+        logger.info('Response sent for user_id: %s', user)
+        return TemplateResponse(request, './Dashboard/UsersList.html',response)
+    except Exception as e:
+        logger.info('Response failed for user_id: %s and Error is: %s',
+                    user, e)
+        # Render the initial HTML page with an empty form
+        messages.error(request, 'Something went wrong. Please Try again')
+        return TemplateResponse(request, './Error404.html')
+
+
+@login_required(login_url='/admin/login/')
+def BlockUser(request, id):
+    user_id = id
+    logger.info('request for user_id: %s', user_id)
+    if not user_id:
+        logger.critical("user_id  is required")
+        messages.error(request, 'User not found. Please Try again')
+        return redirect('/admin/allUsers/')
+    try:
+        response = block_user_by_admin(request,user_id)
+        logger.info('Response sent for user_id: %s', user_id)
+        return response
+    except Exception as e:
+        logger.info('Response failed for user_id: %s and Error is: %s',
+                    user_id, e)
+        messages.error(request, 'Something went wrong. Please Try again')
+        return TemplateResponse(request, './Error404.html')
+
+
+@login_required(login_url='/admin/login/')
+def GlucoResultPage(request):
+    user = request.user
+    logger.info('request for user_id: %s', user)
+    try:
+        response = gluco_result_table(request)
+        logger.info('Response sent for user_id: %s', user)
+        return TemplateResponse(request, './Dashboard/GlucoResult.html',response)
+    except Exception as e:
+        logger.info('Response failed for user_id: %s and Error is: %s',
+                    user, e)
+        # Render the initial HTML page with an empty form
+        messages.error(request, 'Something went wrong. Please Try again')
+        return TemplateResponse(request, './Error404.html')
+
+@login_required(login_url='/admin/login/')
+def DownloadGlucoVideo(request, id):
+    video_id = id
+    logger.info('request for video_id: %s', video_id)
+    if not video_id:
+        logger.critical("video_id  is required")
+        messages.error(request, 'User not found. Please Try again')
+        return redirect('/admin/glucoResults/')
+    try:
+        response = download_gluco_video(video_id)
+        logger.info('Response sent for video_id: %s', video_id)
+        return response
+    except Exception as e:
+        logger.info('Response failed for video_id: %s and Error is: %s',
+                    video_id, e)
+        messages.error(request, 'Something went wrong. Please Try again')
+        return TemplateResponse(request, './Error404.html')

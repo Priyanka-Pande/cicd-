@@ -1,0 +1,128 @@
+{% extends 'navbar.html' %}
+{% block title %} Dashboard {% endblock %}
+
+{% block dashcontent %}
+<div class="">
+  {% if messages %}
+        <div id="message-container" class="fixed top-5 right-5 z-50">
+            {% for message in messages %}
+                <div id="message" class="px-4 py-2 rounded-md shadow-md mb-4 
+                    {% if message.tags == 'success' %}
+                        bg-green-500 text-white
+                    {% elif message.tags == 'error' %}
+                        bg-red-500 text-white
+                    {% endif %}">
+                        {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function () {
+            closeMessage();
+            }, 5000);
+
+            function closeMessage() {
+            var messageContainer = document.getElementById("message-container");
+            if (messageContainer) {
+                messageContainer.remove();
+            }
+            }
+        </script>
+    {% endif %}
+<div class="container mx-auto my-8 p-6 bg-white shadow-lg rounded-lg">
+  <h1 class="text-gray-600 text-2xl pb-8 text-center">Personal Users Data</h1>
+    <table class="table-auto w-full">
+      <thead>
+        <tr>
+          <th class="px-4 py-2 text-left text-gray-700">Name</th>
+          <th class="px-4 py-2 text-left text-gray-700">Account Type</th>
+          <th class="px-4 py-2 text-left text-gray-700">Mobile Number</th>
+          <th class="px-4 py-2 text-left text-gray-700">Status</th>
+          <th class="px-4 py-2 text-left text-gray-700">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        </tr>
+        {% for user in personal_users %}
+          <tr class="border-t border-gray-200">
+            <td class="px-4 py-2 text-gray-600">{{user.full_name}}</td>
+            <td class="px-4 py-2 text-gray-600">{{user.account_type}}</td>
+            <td class="px-4 py-2 text-gray-600">{{user.phone_numeber}}</td>
+            {% if user.status == 'A' %}
+                <td class="px-4 py-2 text-gray-600">Active</td>
+                <td class="px-4 py-2">
+                  <!-- <a href="{% url 'block_all_users' id=user.users_id %}" class="px-4 py-2 bg-red-500 hover:bg-blue-600 text-white rounded no-underline">Block</a> -->
+                  <a id="button-plus"
+                  hx-get = "{% url 'block_all_users' id=user.users_id %}"
+                  hx-target = '#htmx'
+                  hx-swap = 'innerHTML' class="px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded no-underline">
+                    Block
+                  </a>
+                </td>
+              {% else %}
+                <td class="px-4 py-2 text-gray-600">Blocked</td>
+                <td class="px-4 py-2">
+                  <a id="button-plus"
+                  hx-get = "{% url 'block_all_users' id=user.users_id %}"
+                  hx-target = '#htmx'
+                  hx-swap = 'innerHTML' class="px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded no-underline">
+                    UnBlock
+                  </a>
+                </td>
+              {% endif %}
+          </tr>
+        {% endfor %}
+        <!-- Add more rows as needed -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="container mx-auto my-8 p-6 bg-white shadow-lg rounded-lg">
+    <h1 class="text-gray-600 text-2xl pb-8 text-center">Personal Users Account Created By professional</h1>
+      <table class="table-auto w-full">
+        <thead>
+          <tr>
+            <th class="px-4 py-2 text-left text-gray-700">Name</th>
+            <th class="px-4 py-2 text-left text-gray-700">Account Type</th>
+            <th class="px-4 py-2 text-left text-gray-700">Mobile Number</th>
+            <th class="px-4 py-2 text-left text-gray-700">Status</th>
+            <th class="px-4 py-2 text-left text-gray-700">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          </tr>
+          {% for user in user_by_professional %}
+            <tr class="border-t border-gray-200">
+              <td class="px-4 py-2 text-gray-600">{{user.full_name}}</td>
+              <td class="px-4 py-2 text-gray-600">{{user.account_type}}</td>
+              <td class="px-4 py-2 text-gray-600">{{user.phone_numeber}}</td>
+              {% if user.status == 'A' %}
+                <td class="px-4 py-2 text-gray-600">Active</td>
+                <td class="px-4 py-2">
+                  <!-- <a href="{% url 'block_all_users' id=user.users_id %}" class="px-4 py-2 bg-red-500 hover:bg-blue-600 text-white rounded no-underline">Block</a> -->
+                  <a id="button-plus"
+                  hx-get = "{% url 'block_all_users' id=user.users_id %}"
+                  hx-target = '#htmx'
+                  hx-swap = 'innerHTML' class="px-4 py-2 bg-red-500 hover:bg-red-400 text-white rounded no-underline">
+                    Block
+                  </a>
+                </td>
+              {% else %}
+                <td class="px-4 py-2 text-gray-600">Blocked</td>
+                <td class="px-4 py-2">
+                  <a id="button-plus"
+                  hx-get = "{% url 'block_all_users' id=user.users_id %}"
+                  hx-target = '#htmx'
+                  hx-swap = 'innerHTML' class="px-4 py-2 bg-green-500 hover:bg-green-400 text-white rounded no-underline">
+                    UnBlock
+                  </a>
+                </td>
+              {% endif %}
+            </tr>
+          {% endfor %}
+          <!-- Add more rows as needed -->
+        </tbody>
+      </table>
+    </div>
+</div>
+{% endblock %}

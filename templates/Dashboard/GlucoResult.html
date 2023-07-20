@@ -1,0 +1,73 @@
+{% extends 'navbar.html' %}
+{% block title %} Dashboard {% endblock %}
+{% block dashcontent %}
+<div class="">
+    {% if messages %}
+        <div id="message-container" class="fixed top-5 right-5 z-50">
+            {% for message in messages %}
+                <div id="message" class="px-4 py-2 rounded-md shadow-md mb-4 
+                    {% if message.tags == 'success' %}
+                        bg-green-500 text-white
+                    {% elif message.tags == 'error' %}
+                        bg-red-500 text-white
+                    {% endif %}">
+                        {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function () {
+            closeMessage();
+            }, 5000);
+
+            function closeMessage() {
+            var messageContainer = document.getElementById("message-container");
+            if (messageContainer) {
+                messageContainer.remove();
+            }
+            }
+        </script>
+    {% endif %}
+    <div class="container mx-auto my-8 p-6 bg-white shadow-lg rounded-lg">
+        <h1 class="text-gray-600 text-2xl pb-8 text-center">Personal Users Data</h1>
+          <table class="table-auto w-full">
+            <thead>
+              <tr>
+                <th class="px-4 py-2 text-left text-gray-700">Patient Name</th>
+                <th class="px-4 py-2 text-left text-gray-700">Gluco Value</th>
+                <th class="px-4 py-2 text-left text-gray-700">Tested By</th>
+                <th class="px-4 py-2 text-left text-gray-700">Video Download</th>
+                <th class="px-4 py-2 text-left text-gray-700">View Video</th>
+              </tr>
+            </thead>
+            <tbody>
+              </tr>
+              {% for result in gluco_result_data %}
+                <tr class="border-t border-gray-200">
+                  <td class="px-4 py-2 text-gray-600">{{result.patient_name}}</td>
+                  <td class="px-4 py-2 text-gray-600">{{result.gluco_value}}</td>
+                    {% if result.professional_id %}
+                      <td class="px-4 py-2 text-gray-600">Professional</td>
+                    {% else %}
+                      <td class="px-4 py-2 text-gray-600">Personal</td>
+                    {% endif %}
+                    <!-- <td class="px-4 py-2">
+                        <a  id="button-plus"
+                        href="{{result.video}}"
+                        class="px-4 py-2 text-white bg-gray-800 hover:bg-blue-900	 rounded no-underline">
+                            Download
+                        </a>
+                     </td> -->
+                     <td class="px-4 py-2">
+                        <a href={{result.video}} class="px-4 py-2 bg-gray-800 hover:bg-blue-900 text-white rounded no-underline">
+                          Download
+                        </a>
+                     </td>
+                </tr>
+              {% endfor %}
+              <!-- Add more rows as needed -->
+            </tbody>
+          </table>
+        </div>
+</div>
+{% endblock %}
