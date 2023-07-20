@@ -1,0 +1,39 @@
+{% extends 'index.html' %}
+{% block title %} 404 Error - Page Not Found {% endblock %}
+
+
+{% block content %}
+{% if messages %}
+        <div id="message-container" class="fixed top-5 right-5 z-50">
+            {% for message in messages %}
+                <div id="message" class="px-4 py-2 rounded-md shadow-md mb-4 
+                    {% if message.tags == 'success' %}
+                        bg-green-500 text-white
+                    {% elif message.tags == 'error' %}
+                        bg-red-500 text-white
+                    {% endif %}">
+                        {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function () {
+            closeMessage();
+            }, 5000);
+
+            function closeMessage() {
+            var messageContainer = document.getElementById("message-container");
+            if (messageContainer) {
+                messageContainer.remove();
+            }
+            }
+        </script>
+    {% endif %}
+<div class="bg-gray-100 flex flex-col items-center justify-center h-screen">
+    <div class="text-center">
+      <h1 class="text-6xl font-bold text-gray-800 mb-6">404</h1>
+      <p class="text-xl text-gray-600">Oops! The page you're looking for could not be found. Please Try again</p>
+    </div>
+  </div>
+
+{% endblock %}

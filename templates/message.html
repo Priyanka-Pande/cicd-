@@ -1,0 +1,29 @@
+{% extends 'index.html' %}
+{% block content %}
+{% if messages %}
+        <div id="message-container" class="fixed top-5 right-5 z-50">
+            {% for message in messages %}
+                <div id="message" class="px-4 py-2 rounded-md shadow-md mb-4 
+                    {% if message.tags == 'success' %}
+                        bg-green-500 text-white
+                    {% elif message.tags == 'error' %}
+                        bg-red-500 text-white
+                    {% endif %}">
+                        {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function () {
+            closeMessage();
+            }, 5000);
+
+            function closeMessage() {
+            var messageContainer = document.getElementById("message-container");
+            if (messageContainer) {
+                messageContainer.remove();
+            }
+            }
+        </script>
+    {% endif %}
+{% endblock %}

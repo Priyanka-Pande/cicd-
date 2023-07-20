@@ -1,36 +1,100 @@
 {% extends 'navbar.html' %}
 {% block title %} Dashboard {% endblock %}
-
 {% block dashcontent %}
 <div class="flex flex-wrap">
+  {% if messages %}
+        <div id="message-container" class="fixed top-5 right-5 z-50">
+            {% for message in messages %}
+                <div id="message" class="px-4 py-2 rounded-md shadow-md mb-4 
+                    {% if message.tags == 'success' %}
+                        bg-green-500 text-white
+                    {% elif message.tags == 'error' %}
+                        bg-red-500 text-white
+                    {% endif %}">
+                        {{ message }}
+                </div>
+            {% endfor %}
+        </div>
+        <script>
+            setTimeout(function () {
+            closeMessage();
+            }, 5000);
+
+            function closeMessage() {
+            var messageContainer = document.getElementById("message-container");
+            if (messageContainer) {
+                messageContainer.remove();
+            }
+            }
+        </script>
+    {% endif %}
     <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
-      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
-        <p class="text-xl font-bold">Total No. of Users</p>
-        <p class="text-xl font-bold">{{total_users}}</p>
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Total No. of Users</p>
+        <p class="text-xl	 font-bold">{{total_report_data.total_users_count}}</p>
       </div>
     </div>
+
     <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
-      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
-        <p class="text-xl font-bold">Total No. of Blocked Users</p>
-        <p class="text-xl font-bold">{{total_blocked_users}}</p>
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Total No. of Blocked Users</p>
+        <p class="text-xl	 font-bold">{{total_report_data.total_blocked_user}}</p>
       </div>
     </div>
+
     <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
-      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
-        <p class="text-xl font-bold">Total No. of Gluco Tests</p>
-        <p class="text-xl font-bold">{{total_tests}}</p>
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Total No. of Gluco Tests</p>
+        <p class="text-xl	 font-bold">{{total_report_data.total_test_condected}}</p>
       </div>
     </div>
+
     <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
-      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
-        <p class="text-xl font-bold">Total No. of Videos</p>
-        <p class="text-xl font-bold">{{total_videos}}</p>
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Total No. of Videos</p>
+        <p class="text-xl	 font-bold">{{total_report_data.total_video_count}}</p>
       </div>
     </div>
+
     <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
-      <div class="bg-white h-full min-h-48	 rounded-md shadow p-4">
-        <p class="text-xl font-bold">Total No. of Pictures</p>
-        <p class="text-xl font-bold">{{total_pictures}}</p>
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Total No. of Failed Test</p>
+        <p class="text-xl	 font-bold">{{total_report_data.total_failed_test}}</p>
+      </div>
+    </div> 
+
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Today's Logged-in Users</p>
+        <p class="text-xl	 font-bold">{{daily_report_data.today_user_count}}</p>
+      </div>
+    </div>
+    
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Today Blocked Users</p>
+        <p class="text-xl	 font-bold">{{daily_report_data.blocked_user_today}}</p>
+      </div>
+    </div>
+    
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Today Gluco Test Count</p>
+        <p class="text-xl	 font-bold">{{daily_report_data.today_test_condected}}</p>
+      </div>
+    </div>
+    
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4 flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Today Video Count</p>
+        <p class="text-xl	 font-bold">{{daily_report_data.today_video_count}}</p>
+      </div>
+    </div>
+    
+    <div class="w-full md:w-2/4 lg:w-1/4 xl:w-1/4 p-4">
+      <div class="bg-white h-full min-h-48 rounded-md shadow p-4  flex flex-col items-center justify-center">
+        <p class="text-base	 font-bold">Today Failed Test Count</p>
+        <p class="text-xl font-bold">{{daily_report_data.today_failed_test}}</p>
       </div>
     </div>
 </div>
@@ -47,8 +111,8 @@
   
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const labels = {{ labels|safe }};
-        const data = {{ users_data|safe }};
+        const labels = {{ mothly_graph_data.labels|safe }};
+        const data = {{ mothly_graph_data.users_data|safe }};
 
         const ctx = document.getElementById('usersChart').getContext('2d');
         const myChart = new Chart(ctx, {
@@ -76,8 +140,8 @@
 
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        const labels = {{ labels|safe }};
-        const data = {{ test_data|safe }};
+        const labels = {{mothly_graph_data.labels|safe }};
+        const data = {{ mothly_graph_data.test_data|safe }};
 
         const ctx = document.getElementById('testChart').getContext('2d');
         const myChart = new Chart(ctx, {
