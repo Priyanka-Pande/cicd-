@@ -40,3 +40,7 @@ def get_patient_data(patient_id):
 
 def is_patient_already_exists_data(patient_user_id,profile):
     return PersonalProfile.objects.filter(user_id=patient_user_id,profile_id=profile).first()
+
+
+def is_user(user_id):
+    return Users.objects.get(id=user_id)

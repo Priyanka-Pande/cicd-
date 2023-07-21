@@ -95,9 +95,11 @@ def block_user_by_admin(request,user_id):
     user = get_user_for_action(user_id)
     if user.status == 'A':
         user.status = 'B'
+        user.updated_on = datetime.datetime.now()
         messages.error(request, 'User Blocked successfully.')
     else:
         user.status = 'A'
+        user.updated_on = datetime.datetime.now()
         messages.success(request, 'User UnBlocked successfully.')
     user.save()
     return redirect('/admin/allUsers/')
