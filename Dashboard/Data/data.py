@@ -32,7 +32,7 @@ def total_no_of_blocked_daily_users_data(date):
     return Users.objects.filter(
         role = 'User',
         status = 'B',
-        date_joined__date = date
+        updated_on__date = date
     ).count()
 
 def total_no_of_gluco_test_data():
@@ -75,7 +75,7 @@ def get_all_personal_users_data():
         users_id = F('user_id__id'),
         phone_numeber = F('user_id__phone_number'),
         status = F('user_id__status'),
-    ).filter(user_id__role='User',tester_type=2)
+    ).filter(user_id__role='User',tester_type=2).order_by('created_on').reverse()
 
 def get_all_personal_users_by_professional_data():
     return PersonalProfile.objects.annotate(
@@ -99,7 +99,7 @@ def get_all_professional_users_data():
         users_id = F('user_id__id'),
         phone_numeber = F('user_id__phone_number'),
         status = F('user_id__status'),
-    ).filter(user_id__role='User')
+    ).filter(user_id__role='User').order_by('created_on').reverse()
 
 
 def get_user_for_action(user_id):
@@ -113,7 +113,7 @@ def get_gluco_result_value_data():
         professional_id = F('profile_id__id'),
         video_id = F('video_location__id'),
         video = F('video_location__video_file')
-    ).all()
+    ).all().order_by('reported_date').reverse()
 
 
 def get_gluco_video_data(video_id):
