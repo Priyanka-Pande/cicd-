@@ -24,6 +24,22 @@ class CustomTokenRefreshView(TokenViewBase):
     serializer_class = CustomTokenRefreshSerializer
 
 
+class RefreshTokenAPI(APIView):
+
+    def post(self, request):
+        data = request.data
+        refresh_token = data.get('refresh')
+        if not refresh_token:
+            logger.critical("refresh_token  is required")
+            return Response({"message":"Refresh Token is required"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            response = refresh_the_access_token(refresh_token)
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.info('Response failed and Error is: %s', e)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
 class LoginAPI(APIView):
 
     def post(self, request):
