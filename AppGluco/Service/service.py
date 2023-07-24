@@ -58,9 +58,9 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
             ##########----- YOLO Resenet Regression Array -----##########
             img_array_r = cv2.cvtColor(roi_normal, cv2.COLOR_BGR2RGB)
             img_array_r = cv2.resize(img_array_r, (64, 36))
-            mean = np.array([0.485, 0.456, 0.406])
-            std = np.array([0.229, 0.224, 0.225])
-            img_array_r = ((img_array_r / 255.0) - mean) / std
+            # mean = np.array([0.485, 0.456, 0.406])
+            # std = np.array([0.229, 0.224, 0.225])
+            # img_array_r = ((img_array_r / 255.0) - mean) / std
             img_array_r = img_array_r.reshape((1,) + img_array_r.shape)
             x_test.append(img_array_r)
 
@@ -95,7 +95,7 @@ def upload_video_for_patient(patient_id,video_file,user):
 
     final_predictions = []
     x_test = []
-    cModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/Classification_modelV3normalized.h5')
+    cModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/Classification_modelV5normalized.h5')
     # get video id as .mp4
     video_uid=  video_file_name
     while sec < 7:
