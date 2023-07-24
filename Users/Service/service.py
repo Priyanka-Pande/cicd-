@@ -19,13 +19,16 @@ def authorise_and_generate_token(phone_number,otp):
     user = is_already_user(phone_number)
     is_exists = False
     user_type = ""
+    test_type = ""
     if user is None:
         user = create_app_user(phone_number)
     else:
         if user.type is not None:
             is_exists = True
             user_type = user.type
-
+        if user.type == "P":
+            profiel = is_profile_exsits_data(user.id,user.type)
+            test_type = profiel.tester_type
     if user.status != 'A':
         return{
             "message":"Your Account Is Blocked. Please Contact Our Team."
@@ -40,6 +43,7 @@ def authorise_and_generate_token(phone_number,otp):
     'is_exists' : is_exists,
     "user_id" : user.id,
     "user_type" :user_type,
+    "test_type" :test_type
     }
 
 

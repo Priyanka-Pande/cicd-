@@ -13,7 +13,10 @@ def create_app_user(phone_number):
 def get_user_profile_data(user_id,user_type):
     model = USER_TYPE_MODELS[user_type]
     values = ACCOUNT_INFO_QUERY_VALUES[user_type]
-    result =  model.objects.values(user_type = F('user_id__type'),*values).filter(user_id=user_id).first()
+    result =  model.objects.values(
+        user_type = F('user_id__type'),
+        phone_number = F('user_id__phone_number'),
+        *values).filter(user_id=user_id).first()
     return result
 
 
