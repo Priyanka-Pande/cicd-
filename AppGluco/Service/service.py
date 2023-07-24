@@ -18,6 +18,14 @@ def get_report_for_personal(user):
     patients = get_result_report_personal_data(patient_id)
     return patients
 
+def adjust_levels(image, level_in_low, level_in_high, level_out_low=0, level_out_high=255):
+    # Compute scale and offset
+    scale = (level_out_high - level_out_low) / (level_in_high - level_in_low)
+    offset = level_out_low - level_in_low * scale
+    # Apply adjustment
+    image = cv2.convertScaleAbs(image, alpha=scale, beta=offset)
+    
+    return image
 
 def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cModel):
     global roi
@@ -57,6 +65,10 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
             roi = cv2.cvtColor(roi, cv2.COLOR_RGB2BGR)
             ##########----- YOLO Resenet Regression Array -----##########
             img_array_r = cv2.cvtColor(roi_normal, cv2.COLOR_BGR2RGB)
+            level_in_low = np.min(img_array_r)
+            level_in_high = np.max(img_array_r)
+            # Adjust the levels
+            img_array_r = adjust_levels(img_array_r, level_in_low, level_in_high, level_out_low=0, level_out_high=255)
             img_array_r = cv2.resize(img_array_r, (64, 36))
             # mean = np.array([0.485, 0.456, 0.406])
             # std = np.array([0.229, 0.224, 0.225])
@@ -66,6 +78,10 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
 
             ##########----- YOLO Classification Resenet Array -----##########
             img_array_c = cv2.cvtColor(roi_normal, cv2.COLOR_BGR2RGB)
+            level_in_low = np.min(img_array_c)
+            level_in_high = np.max(img_array_c)
+            # Adjust the levels
+            img_array_c = adjust_levels(img_array_c, level_in_low, level_in_high, level_out_low=0, level_out_high=255)
             img_array_c = cv2.resize(img_array_c, (64, 36))
             mean = np.array([0.485, 0.456, 0.406])
             std = np.array([0.229, 0.224, 0.225])
