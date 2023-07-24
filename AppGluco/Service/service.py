@@ -70,9 +70,9 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
             # # Adjust the levels
             # img_array_r = adjust_levels(img_array_r, level_in_low, level_in_high, level_out_low=0, level_out_high=255)
             img_array_r = cv2.resize(img_array_r, (64, 36))
-            # mean = np.array([0.485, 0.456, 0.406])
-            # std = np.array([0.229, 0.224, 0.225])
-            # img_array_r = ((img_array_r / 255.0) - mean) / std
+            mean = np.array([0.485, 0.456, 0.406])
+            std = np.array([0.229, 0.224, 0.225])
+            img_array_r = ((img_array_r / 255.0) - mean) / std
             img_array_r = img_array_r.reshape((1,) + img_array_r.shape)
             x_test.append(img_array_r)
 
