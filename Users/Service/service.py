@@ -27,8 +27,8 @@ def authorise_and_generate_token(phone_number,otp):
             is_exists = True
             user_type = user.type
         if user.type == "P":
-            profiel = is_profile_exsits_data(user.id,user.type)
-            test_type = profiel.tester_type
+            profile = is_profile_exsits_data(user.id,user.type)
+            test_type = profile.tester_type if profile != None else test_type
     if user.status != 'A':
         return{
             "message":"Your Account Is Blocked. Please Contact Our Team."
@@ -48,6 +48,9 @@ def authorise_and_generate_token(phone_number,otp):
 
 
 def create_user_profile(user_type,profile_data):
+    profile = is_profile_exsits_data(profile_data['user_id'].id,user_type)
+    if profile:
+        return {"message":"Profile Already Exsists"}
     profile =  create_user_profile_data(user_type,profile_data)
     return {"message":"Profile Created Successfully"}
 

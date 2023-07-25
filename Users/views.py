@@ -112,11 +112,6 @@ class ProfessionalProfile(APIView):
             "profile_type":profile_type,"profile_pic":profile_pic,"state":state}
         try:
             user_type = 'MR'
-            profile = is_profile_exsits_data(user_id,user_type)
-            if profile:
-                response = update_personal_user_profile(profile,user_type,profile_data)
-                logger.critical("professional profile update")
-                return Response(response, status=status.HTTP_200_OK)
             response = create_user_profile(user_type,profile_data)
             logger.info('Response sent to create profile for user_id: %s', user_id)
             return Response(response, status=status.HTTP_200_OK)
@@ -164,11 +159,6 @@ class PersonalProfile(APIView):
             "age":age,"gender":gender,"state":state,"contact_number":contact_number,"tester_type":2}
         try:
             user_type = 'P'
-            profile = is_profile_exsits_data(user_id,user_type)
-            if profile:
-                response = update_personal_user_profile(profile,user_type,profile_data)
-                logger.critical("personal profile update")
-                return Response(response, status=status.HTTP_200_OK)
             response = create_user_profile(user_type,profile_data)
             logger.info('Response sent to create profile for user_id: %s', user_id)
             return Response(response, status=status.HTTP_200_OK)
