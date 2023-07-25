@@ -27,8 +27,8 @@ def authorise_and_generate_token(phone_number,otp):
             is_exists = True
             user_type = user.type
         if user.type == "P":
-            profiel = is_profile_exsits_data(user.id,user.type)
-            test_type = profiel.tester_type
+            profile = is_profile_exsits_data(user.id,user.type)
+            test_type = profile.tester_type if profile != None else test_type
     if user.status != 'A':
         return{
             "message":"Your Account Is Blocked. Please Contact Our Team."
@@ -48,6 +48,9 @@ def authorise_and_generate_token(phone_number,otp):
 
 
 def create_user_profile(user_type,profile_data):
+    profile = is_profile_exsits_data(profile_data['user_id'].id,user_type)
+    if profile:
+        return {"message":"Profile Already Exsists"}
     profile =  create_user_profile_data(user_type,profile_data)
     return {"message":"Profile Created Successfully"}
 
@@ -85,21 +88,23 @@ def create_patient(user,user_type,profile_data):
         }
 
 
-def update_personal_user_profile(profile,user_type,profile_data):
-    profile.full_name = profile_data['full_name']
-    profile.profile_pic = profile_data['profile_pic']
-    profile.state = profile_data['state']
-    if user_type == 'P':
-        profile.age = profile_data['age']
-        profile.gender = profile_data['gender']
-        profile.contact_number = profile_data['contact_number']
-        profile.tester_type = 2
-    else:
-        profile.organization_name = profile_data['organization_name']
-        profile.profile_type = profile_data['profile_type']
+def update_personal_user_profile(profile,profile_data):
+    profile.full_name = profile_data['full_name'] if profile_data['full_name'] != None else profile.full_name
+    profile.profile_pic = profile_data['profile_pic'] if profile_data['profile_pic'] != None else profile.profile_pic
+    profile.state = profile_data['state'] if profile_data['state'] != None else profile.state
+    profile.age = profile_data['age'] if profile_data['age'] != None else profile.age
+    profile.tester_type = 2
     profile.save()
     return {"message":"Profile Updated Successfully"}
 
+def update_perofessional_user_profile(profile,profile_data):
+    profile.full_name = profile_data['full_name'] if profile_data['full_name'] != None else profile.full_name
+    profile.profile_pic = profile_data['profile_pic'] if profile_data['profile_pic'] != None else profile.profile_pic
+    profile.organization_name = profile_data['organization_name'] if profile_data['organization_name'] != None else profile.organization_name
+    profile.profile_type = profile_data['profile_type'] if profile_data['profile_type'] != None else profile.profile_type
+    profile.tester_type = 2
+    profile.save()
+    return {"message":"Profile Updated Successfully"}
 
 def verify_otp(phone_number,otp):
     opt_check = '1234'
