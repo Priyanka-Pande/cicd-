@@ -17,7 +17,8 @@ def get_user_profile_data(user_id,user_type):
         user_type = F('user_id__type'),
         phone_number = F('user_id__phone_number'),
         *values).filter(user_id=user_id).first()
-    result['profile_pic'] = f'https://storage.googleapis.com/glucoqr-p1-preprod/{result["profile_pic"]}'
+    if result['profile_pic'] != '':
+        result['profile_pic'] = f'https://storage.googleapis.com/glucoqr-p1-preprod/{result["profile_pic"]}'
     return result
 
 

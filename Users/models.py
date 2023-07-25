@@ -57,7 +57,7 @@ class PersonalProfile(models.Model):
     age = models.IntegerField(null=True, blank=True)
     gender = models.CharField(max_length=1, choices=USER_GENDER_CHOICES, null=True,blank=True)
     state = models.CharField(max_length=50,null=True, blank=True)
-    tester_type = models.CharField(max_length=1,null=True,blank=True)
+    tester_type = models.CharField(max_length=1,default=1,null=True,blank=True)
     contact_number = PhoneNumberField(null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True,null=True)
     updated_on = models.DateTimeField(auto_now_add=True,null=True)

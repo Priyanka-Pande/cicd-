@@ -112,11 +112,6 @@ class ProfessionalProfile(APIView):
             "profile_type":profile_type,"profile_pic":profile_pic,"state":state}
         try:
             user_type = 'MR'
-            profile = is_profile_exsits_data(user_id,user_type)
-            if profile:
-                response = update_personal_user_profile(profile,user_type,profile_data)
-                logger.critical("professional profile update")
-                return Response(response, status=status.HTTP_200_OK)
             response = create_user_profile(user_type,profile_data)
             logger.info('Response sent to create profile for user_id: %s', user_id)
             return Response(response, status=status.HTTP_200_OK)
@@ -164,11 +159,6 @@ class PersonalProfile(APIView):
             "age":age,"gender":gender,"state":state,"contact_number":contact_number,"tester_type":2}
         try:
             user_type = 'P'
-            profile = is_profile_exsits_data(user_id,user_type)
-            if profile:
-                response = update_personal_user_profile(profile,user_type,profile_data)
-                logger.critical("personal profile update")
-                return Response(response, status=status.HTTP_200_OK)
             response = create_user_profile(user_type,profile_data)
             logger.info('Response sent to create profile for user_id: %s', user_id)
             return Response(response, status=status.HTTP_200_OK)
@@ -177,6 +167,74 @@ class PersonalProfile(APIView):
                         user_id, e)
             return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
+
+class UpdatePersonalProfile(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self,request):
+        data = request.data
+        user_id = request.user
+        full_name = data.get('full_name')
+        profile_pic = data.get('profile_pic')
+        age = data.get('age')
+        state = data.get('state')
+        logger.info('request for action profile for user_id: %s', user_id)
+        if profile_pic is not None:
+            try:
+                validate_file_extension(profile_pic)
+            except Exception as e:
+                logger.critical("image format is not valid , Exception %s",e)
+                return Response({"message":"Image format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            profile_data = {"user_id":user_id,"full_name":full_name,"profile_pic":profile_pic,
+            "age":age,"state":state}
+            user_type = 'P'
+            profile = is_profile_exsits_data(user_id,user_type)
+            if profile:
+                response = update_personal_user_profile(profile,profile_data)
+                logger.critical("personal profile update")
+                logger.info('Response sent to create profile for user_id: %s', user_id)
+                return Response(response, status=status.HTTP_200_OK)
+            response = {"message":"Profile Not Found"}
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.info('Response failed to create profile for user_id: %s and Error is: %s',
+                        user_id, e)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+class UpdatePerofessionalProfile(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self,request):
+        data = request.data
+        user_id = request.user
+        full_name = data.get('full_name')
+        profile_pic = data.get('profile_pic')
+        organization_name = data.get('organization_name')
+        profile_type = data.get('profile_type')
+        logger.info('request for action profile for user_id: %s', user_id)
+        if profile_pic is not None:
+            try:
+                validate_file_extension(profile_pic)
+            except Exception as e:
+                logger.critical("image format is not valid , Exception %s",e)
+                return Response({"message":"Image format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            profile_data = {"user_id":user_id,"full_name":full_name,"profile_pic":profile_pic,
+            "profile_type":profile_type,"organization_name":organization_name}
+            user_type = 'MR'
+            profile = is_profile_exsits_data(user_id,user_type)
+            if profile:
+                response = update_perofessional_user_profile(profile,profile_data)
+                logger.critical("personal profile update")
+                logger.info('Response sent to create profile for user_id: %s', user_id)
+                return Response(response, status=status.HTTP_200_OK)
+            response = {"message":"Profile Not Found"}
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.info('Response failed to create profile for user_id: %s and Error is: %s',
+                        user_id, e)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
 class AccountInfo(APIView):
     permission_classes = [IsAuthenticated]
