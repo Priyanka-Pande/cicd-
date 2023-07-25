@@ -198,6 +198,6 @@ logging.config.dictConfig({
 GS_BUCKET_NAME = env('GS_BUCKET_NAME')
 GS_PROJECT_ID = env('GS_PROJECT_ID')
 GS_CREDENTIALS = service_account.Credentials.from_service_account_file(
-    '/Users/mac/Desktop/GlucoQr/credentials/glucoqr-baff2fb7ba02.json'
+    '/home/gqrp1_preprod/gqrp1_preprod/credentials/glucoqr-baff2fb7ba02.json'
 )
 DEFAULT_FILE_STORAGE = env('DEFAULT_FILE_STORAGE')
