@@ -112,6 +112,7 @@ def get_gluco_result_value_data():
         patient_name = F('patient_id__full_name'),
         professional_id = F('profile_id__id'),
         video_id = F('video_location__id'),
+        reported_at = F('reported_date__date'),
         video = F('video_location__video_file')
     ).all().order_by('reported_date').reverse()
 
