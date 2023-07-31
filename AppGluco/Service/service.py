@@ -27,6 +27,37 @@ def adjust_levels(image, level_in_low, level_in_high, level_out_low=0, level_out
     
     return image
 
+def apply_gaussian_blur(frame, kernel_size=(5, 5), sigma=0):
+    return cv2.GaussianBlur(frame, kernel_size, sigma)
+
+
+def apply_auto_white_balance(frame):
+    # Convert the frame to LAB color space
+    lab_frame = cv2.cvtColor(frame, cv2.COLOR_RGB2LAB)
+
+    # Extract the L, A, and B channels
+    l_channel, a_channel, b_channel = cv2.split(lab_frame)
+
+    # Find the average value of the A and B channels
+    avg_a = a_channel.mean()
+    avg_b = b_channel.mean()
+
+    # Adjust the A and B channels based on the gray world assumption
+    a_channel = a_channel - ((128 - avg_a) * (l_channel / 255.0) * 1.1)
+    b_channel = b_channel - ((128 - avg_b) * (l_channel / 255.0) * 1.1)
+
+    # Clip the values to ensure they stay within the valid range [0, 255]
+    a_channel = np.clip(a_channel, 0, 255).astype(np.uint8)
+    b_channel = np.clip(b_channel, 0, 255).astype(np.uint8)
+
+    # Merge the adjusted channels
+    balanced_lab_frame = cv2.merge([l_channel, a_channel, b_channel])
+
+    # Convert the balanced frame back to RGB color space
+    balanced_frame = cv2.cvtColor(balanced_lab_frame, cv2.COLOR_LAB2RGB)
+
+    return balanced_frame
+
 def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cModel):
     global roi
     # Update the path where video is stored
@@ -37,7 +68,9 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
 
     if hasFrames:
         img_array = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
-
+        blurred_frame = apply_gaussian_blur(img_array, kernel_size=(5, 5), sigma=0)
+        # Apply auto white balance to the blurred frame
+        img_array = apply_auto_white_balance(blurred_frame)
         ##########----- YOLO ROI Extraction -----##########
         results = yolo_model(img_array)
         # Get the predicted bounding boxes, labels, and scores
@@ -48,7 +81,7 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
             x, y, w, h = selected_box[0:4].int().tolist()
 
             # Crop the region of interest (ROI) from the image
-            roi = image[y:h, x:w]
+            roi = img_array[y:h, x:w]
             roiV2 = roi.copy()
 
 
@@ -63,6 +96,8 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
             roi = roi[mid_y - ch2:mid_y + ch2, mid_x - cw2:mid_x + cw2]
             roi_normal = roi.copy()
             roi = cv2.cvtColor(roi, cv2.COLOR_RGB2BGR)
+            img_array = cv2.resize(roiV2, (100, 50))
+            img_array = img_array[12:-6, 18:-18, :]
             ##########----- YOLO Resenet Regression Array -----##########
             img_array_r = cv2.cvtColor(roi_normal, cv2.COLOR_BGR2RGB)
             # level_in_low = np.min(img_array_r)
@@ -77,7 +112,7 @@ def getFrame(sec, count, video_uid, x_test,  yolo_model, final_predictions,cMode
             x_test.append(img_array_r)
 
             ##########----- YOLO Classification Resenet Array -----##########
-            img_array_c = cv2.cvtColor(roi_normal, cv2.COLOR_BGR2RGB)
+            img_array_c = cv2.cvtColor(img_array, cv2.COLOR_BGR2RGB)
             level_in_low = np.min(img_array_c)
             level_in_high = np.max(img_array_c)
             # Adjust the levels
@@ -111,7 +146,7 @@ def upload_video_for_patient(patient_id,video_file,user):
 
     final_predictions = []
     x_test = []
-    cModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/Classification_modelV5normalized.h5')
+    cModel = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/Classification_modelV6normalized_full_preprocess.h5')
     # get video id as .mp4
     video_uid=  video_file_name
     while sec < 7:
