@@ -64,6 +64,7 @@ class UploadVideo(APIView):
             return Response({"message":"Video format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         try:
             response = upload_video_for_patient(patient_id,video_file,user)
+            return response
         except Exception as e:
             logger.info('Response failed for patient_id: %s and Error is: %s',
                         patient_id, e)
