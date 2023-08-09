@@ -38,3 +38,18 @@ class GlucoResultTable(models.Model):
 
     class Meta:
         db_table = 'gluco_result_table'
+
+
+class FAQTable(models.Model):
+    id = models.AutoField(primary_key=True)
+    question = models.TextField()
+    answer = models.TextField()
+    created_on = models.DateTimeField(auto_now_add=True,null=True)
+    updated_on = models.DateTimeField(auto_now_add=True,null=True)
+
+
+    def __str__(self):
+        return  "{}".format(self.id)
+
+    class Meta:
+        db_table = 'FAQ_table'

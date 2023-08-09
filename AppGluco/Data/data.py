@@ -1,5 +1,5 @@
 from django.db.models import F
-from AppGluco.models import GlucoResultTable, VideoTable
+from AppGluco.models import GlucoResultTable, VideoTable, FAQTable
 from Users.Data.data import get_patient_data,is_profile_exsits_data
 
 def get_all_patients_of_professional_data(profile_id):
@@ -57,3 +57,10 @@ def insert_gluco_value_for_patient(user,patient_id,video_id,value):
         gluco_value = value,
         video_location = video_id
     )
+
+
+def get_frequently_asked_questions_data():
+    return FAQTable.objects.values(
+        'question',
+        'answer',
+    ).all().order_by('created_on')

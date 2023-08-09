@@ -12,6 +12,10 @@ from tensorflow.keras.models import load_model
 from Users.Data.data import is_profile_exsits_data
 
 
+def get_frequently_asked_questions():
+    faq = get_frequently_asked_questions_data()
+    return faq
+
 def get_professional_all_patients(user):
     profile_id = is_profile_exsits_data(user.id,user.type)
     patients = get_all_patients_of_professional_data(profile_id)
