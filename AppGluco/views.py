@@ -69,3 +69,19 @@ class UploadVideo(APIView):
             logger.info('Response failed for patient_id: %s and Error is: %s',
                         patient_id, e)
             return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class FAQViews(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        user = request.user
+        logger.info('request for user_id: %s', user)
+        try:
+            response =  get_frequently_asked_questions()
+            logger.info('Response sent for user_id: %s', user)
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.info('Response failed for user_id: %s and Error is: %s',
+                        user, e)
+            return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
