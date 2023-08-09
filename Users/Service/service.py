@@ -2,9 +2,9 @@ import jwt
 from rest_framework.exceptions import AuthenticationFailed
 from django.conf import settings
 from rest_framework_simplejwt.tokens import RefreshToken
-from Users.Data.data import is_already_user, create_app_user, get_user_profile_data, \
-    create_user_profile_data, is_profile_exsits_data, create_patient_user_data,\
-        is_patient_already_exists_data,is_user
+from Users.Data.data import *
+from Users.Constants.userConstants import PROFESSIONAL_USER_TYPE_CHOICES
+
 
 def decode_refresh_token(refresh_token):
     try:
@@ -102,6 +102,7 @@ def update_perofessional_user_profile(profile,profile_data):
     profile.profile_pic = profile_data['profile_pic'] if profile_data['profile_pic'] != None else profile.profile_pic
     profile.organization_name = profile_data['organization_name'] if profile_data['organization_name'] != None else profile.organization_name
     profile.profile_type = profile_data['profile_type'] if profile_data['profile_type'] != None else profile.profile_type
+    profile.state = profile_data['state'] if profile_data['state'] != None else profile.state
     profile.tester_type = 2
     profile.save()
     return {"message":"Profile Updated Successfully"}
@@ -138,3 +139,7 @@ def refresh_the_access_token(refresh_token):
         return {
             "access_token": access_token
         }
+
+def profressiona_user_profile_type():
+    choice_dict = {key: value for key, value in PROFESSIONAL_USER_TYPE_CHOICES}
+    return choice_dict

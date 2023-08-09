@@ -9,10 +9,10 @@ USER_STATUS = [
 ]
 
 PROFESSIONAL_USER_TYPE_CHOICES = [
-    ('D','Doctor'),
-    ('N','Nurses'),
-    ('A','Asha Worker'),
-    ('O','Other'),
+    (0,'Doctor'),
+    (1,'Nurses'),
+    (2,'Asha Worker'),
+    (3,'Other'),
 ]
 
 USER_GENDER_CHOICES = [

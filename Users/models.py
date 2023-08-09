@@ -38,6 +38,8 @@ class ProfessionalProfile(models.Model):
     profile_type = models.CharField(max_length=1, choices=PROFESSIONAL_USER_TYPE_CHOICES, null=True,blank=True)
     profile_pic = models.ImageField(upload_to=partial(get_unique_profile_pic_name), validators=[validate_file_extension], blank=True, null=True)
     state = models.CharField(max_length=50,null=True, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6,null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6,null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True,null=True)
     updated_on = models.DateTimeField(auto_now_add=True,null=True)
 
@@ -59,6 +61,8 @@ class PersonalProfile(models.Model):
     state = models.CharField(max_length=50,null=True, blank=True)
     tester_type = models.CharField(max_length=1,default=1,null=True,blank=True)
     contact_number = PhoneNumberField(null=True, blank=True)
+    latitude = models.DecimalField(max_digits=9, decimal_places=6,null=True, blank=True)
+    longitude = models.DecimalField(max_digits=9, decimal_places=6,null=True, blank=True)
     created_on = models.DateTimeField(auto_now_add=True,null=True)
     updated_on = models.DateTimeField(auto_now_add=True,null=True)
 

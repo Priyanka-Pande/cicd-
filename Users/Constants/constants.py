@@ -9,7 +9,7 @@ USER_TYPE_MODELS = {
 
 ACCOUNT_INFO_QUERY_VALUES = {
     "P" : ['id','full_name','profile_pic','age','gender','state',],
-    "MR" : ['id','full_name','organization_name','profile_type','profile_pic',],
+    "MR" : ['id','full_name','organization_name','profile_type','profile_pic','state'],
     "B" : ['id','full_name','profile_pic','state']
 }
 

@@ -210,6 +210,7 @@ class UpdatePerofessionalProfile(APIView):
         user_id = request.user
         full_name = data.get('full_name')
         profile_pic = data.get('profile_pic')
+        state = data.get('state')
         organization_name = data.get('organization_name')
         profile_type = data.get('profile_type')
         logger.info('request for action profile for user_id: %s', user_id)
@@ -221,7 +222,7 @@ class UpdatePerofessionalProfile(APIView):
                 return Response({"message":"Image format is not valid"}, status=status.HTTP_400_BAD_REQUEST)
         try:
             profile_data = {"user_id":user_id,"full_name":full_name,"profile_pic":profile_pic,
-            "profile_type":profile_type,"organization_name":organization_name}
+            "profile_type":profile_type,"organization_name":organization_name,"state":state}
             user_type = 'MR'
             profile = is_profile_exsits_data(user_id,user_type)
             if profile:
@@ -262,6 +263,7 @@ class CreatePatient(APIView):
         age = data.get('age')
         gender = data.get('gender')
         contact_number = data.get('contact_number')
+        otp = data.get('otp')
         logger.info('request for action profile for user_id: %s', user_id)
         if not full_name:
             logger.critical("full_name  is required")
@@ -285,14 +287,19 @@ class CreatePatient(APIView):
         try:
             user_type = 'P'
             if contact_number:
-                is_exists = is_patient_already_exists(contact_number,user_id)
-                if is_exists:
-                    logger.critical("Patient Already added")
-                    response = {
-                        "message" : "Patient Already Added",
-                        "patient_id" : is_exists.id
-                    }
-                    return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                verified = verify_otp(contact_number,otp)
+                if verified:
+                    is_exists = is_patient_already_exists(contact_number,user_id)
+                    if is_exists:
+                        logger.critical("Patient Already added")
+                        response = {
+                            "message" : "Patient Already Added",
+                            "patient_id" : is_exists.id
+                        }
+                        return Response(response, status=status.HTTP_400_BAD_REQUEST)
+                else:
+                    logger.critical("otp is not valid")
+                    return Response({"message":"OTP is not Valid"}, status=status.HTTP_400_BAD_REQUEST)
             response = create_patient(user_id,user_type,profile_data)
             logger.info('Response sent to create profile for user_id: %s', user_id)
             return Response(response, status=status.HTTP_200_OK)
@@ -327,3 +334,17 @@ class GenerateOTP(APIView):
             logger.info('Response failed for phone_number: %s and Error is: %s',
                         phone_number, e)
             return Response({"message":"Something Went Wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class ProfileTypeInfo(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request):
+        logger.info('GET: Accounts info for user: %s', request.user.id)
+        try:
+            response = profressiona_user_profile_type()
+            logger.info('Accounts info sent for user: %s', request.user.id)
+            return Response(response, status=status.HTTP_200_OK)
+        except Exception as e:
+            logger.error("User: Error in Accounts Info for user: %s is: %s", request.user.id, e)
+            return Response({"message": "Something went wrong"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
