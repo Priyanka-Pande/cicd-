@@ -528,7 +528,7 @@ def upload_video_for_patient(patient_id,video_file,user):
             print("Regression Value 8 : ", str(rRrediction_mean8), flush=True)
 
             # Calculate the average of the two variables
-            final_gluco_value = round((rRrediction_mean7 + rRrediction_mean8) / 2, 2)
+            final_gluco_value = round((abs(rRrediction_mean7) + abs(rRrediction_mean8)) / 2, 2)
 
             # model_filename7 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_7_v2_final_k1_full.pkl'
             # # Load the model from the file using pickle
@@ -583,7 +583,7 @@ def upload_video_for_patient(patient_id,video_file,user):
             print("Regression Value 7 : ", str(rRrediction_mean7), flush=True)
 
             # Calculate the average of the two variables
-            final_gluco_value = round((rRrediction_mean6 + rRrediction_mean7) / 2, 2)
+            final_gluco_value = round((abs(rRrediction_mean6) + abs(rRrediction_mean7)) / 2, 2)
 
             # model_filename6 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_6_v2_final_k1_full.pkl'
             # # Load the model from the file using pickle
@@ -638,7 +638,7 @@ def upload_video_for_patient(patient_id,video_file,user):
             print("Regression Value 6 : ", str(rRrediction_mean6))
 
             # Calculate the average of the two variables
-            final_gluco_value = round((rRrediction_mean5 + rRrediction_mean6) / 2, 2)
+            final_gluco_value = round((abs(rRrediction_mean5) + abs(rRrediction_mean6)) / 2, 2)
 
             # model_filename5 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_5_v2_final_k1_full.pkl'
             # # Load the model from the file using pickle
@@ -693,7 +693,7 @@ def upload_video_for_patient(patient_id,video_file,user):
             print("Regression Value 5 : ", str(rRrediction_mean5))
 
             # Calculate the average of the two variables
-            final_gluco_value = round((rRrediction_mean4 + rRrediction_mean5) / 2, 2)
+            final_gluco_value = round((abs(rRrediction_mean4) + abs(rRrediction_mean5)) / 2, 2)
 
             # model_filename4 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_4_v2_final_k1_full.pkl'
             # # Load the model from the file using pickle
@@ -748,7 +748,7 @@ def upload_video_for_patient(patient_id,video_file,user):
             print("Regression Value 4 : ", str(rRrediction_mean4))
 
             # Calculate the average of the two variables
-            final_gluco_value = round((rRrediction_mean3 + rRrediction_mean4) / 2, 2)
+            final_gluco_value = round((abs(rRrediction_mean3) + abs(rRrediction_mean4)) / 2, 2)
 
             # model_filename3 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_3_v2_final_k1_full.pkl'
             # # Load the model from the file using pickle
@@ -803,7 +803,7 @@ def upload_video_for_patient(patient_id,video_file,user):
             print("Regression Value 3 : ", str(rRrediction_mean3))
 
             # Calculate the average of the two variables
-            final_gluco_value = round((rRrediction_mean2 + rRrediction_mean3) / 2, 2)
+            final_gluco_value = round((abs(rRrediction_mean2) + abs(rRrediction_mean3)) / 2, 2)
 
             # model_filename2 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_2_v2_final_k1_full.pkl'
             # # Load the model from the file using pickle
@@ -858,7 +858,7 @@ def upload_video_for_patient(patient_id,video_file,user):
             print("Regression Value 2 : ", str(rRrediction_mean2))
 
             # Calculate the average of the two variables
-            final_gluco_value = round((rRrediction_mean1 + rRrediction_mean2) / 2, 2)
+            final_gluco_value = round((abs(rRrediction_mean1) + abs(rRrediction_mean2)) / 2, 2)
 
             # model_filename2 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_2_v2_final_k1_full.pkl'
             # # Load the model from the file using pickle
