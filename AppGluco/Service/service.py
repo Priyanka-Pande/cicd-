@@ -515,45 +515,45 @@ def upload_video_for_patient(patient_id,video_file,user):
 
     if (highest_count_added_classes == '7'):
         if (class_counts[highest_count_added_classes] >= condition_count):
-            # rYoloModel7 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class7.h5', compile=False)
-            # rYoloModel7.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions7 = rYoloModel7.predict(x_test_reg)
-            # rRrediction_mean7 = round(rPredictions7.mean() * 280, 2)
-            # print("Regression Value 7 : ", str(rRrediction_mean7), flush=True)
+            rYoloModel7 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class7.h5', compile=False)
+            rYoloModel7.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions7 = rYoloModel7.predict(x_test_reg)
+            rRrediction_mean7 = round(rPredictions7.mean() * 280, 2)
+            print("Regression Value 7 : ", str(rRrediction_mean7), flush=True)
 
-            # rYoloModel8 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class8.h5', compile=False)
-            # rYoloModel8.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions8 = rYoloModel8.predict(x_test_reg)
-            # rRrediction_mean8 = round(rPredictions8.mean() * 650, 2)
-            # print("Regression Value 8 : ", str(rRrediction_mean8), flush=True)
+            rYoloModel8 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class8.h5', compile=False)
+            rYoloModel8.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions8 = rYoloModel8.predict(x_test_reg)
+            rRrediction_mean8 = round(rPredictions8.mean() * 650, 2)
+            print("Regression Value 8 : ", str(rRrediction_mean8), flush=True)
 
-            # # Calculate the average of the two variables
-            # final_gluco_value = round((rRrediction_mean7 + rRrediction_mean8) / 2, 2)
+            # Calculate the average of the two variables
+            final_gluco_value = round((rRrediction_mean7 + rRrediction_mean8) / 2, 2)
 
-            model_filename7 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_7_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename7, "rb") as f:
-                knnModel7 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean7 = knnModel7.predict(X_test_flattened)
-            rRrediction_mean7 = np.mean(rRrediction_mean7)
-            print("Regression Value 7 KNN: ", str(rRrediction_mean7), flush=True)
+            # model_filename7 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_7_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename7, "rb") as f:
+            #     knnModel7 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean7 = knnModel7.predict(X_test_flattened)
+            # rRrediction_mean7 = np.mean(rRrediction_mean7)
+            # print("Regression Value 7 KNN: ", str(rRrediction_mean7), flush=True)
 
-            model_filename8 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_8_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename8, "rb") as f:
-                knnModel8 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean8 = knnModel8.predict(X_test_flattened)
-            rRrediction_mean8 = np.mean(rRrediction_mean8)
-            print("Regression Value 8 KNN: ", str(rRrediction_mean8), flush=True)
+            # model_filename8 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_8_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename8, "rb") as f:
+            #     knnModel8 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean8 = knnModel8.predict(X_test_flattened)
+            # rRrediction_mean8 = np.mean(rRrediction_mean8)
+            # print("Regression Value 8 KNN: ", str(rRrediction_mean8), flush=True)
 
-            #-----------------------------------------------------------
-            #                Weighted Average Calculation
-            #-----------------------------------------------------------
-            rRrediction_mean8 = predication_list_values[7] * rRrediction_mean8
-            rRrediction_mean7 = predication_list_values[6] * rRrediction_mean7
-            final_gluco_value = round((rRrediction_mean8 + rRrediction_mean7)/(predication_list_values[7] + predication_list_values[6]),2)
+            # #-----------------------------------------------------------
+            # #                Weighted Average Calculation
+            # #-----------------------------------------------------------
+            # rRrediction_mean8 = predication_list_values[7] * rRrediction_mean8
+            # rRrediction_mean7 = predication_list_values[6] * rRrediction_mean7
+            # final_gluco_value = round((rRrediction_mean8 + rRrediction_mean7)/(predication_list_values[7] + predication_list_values[6]),2)
 
             insert_reading = insert_gluco_value_for_patient(user,patient_id,video,final_gluco_value)
             response =  { 
@@ -570,45 +570,45 @@ def upload_video_for_patient(patient_id,video_file,user):
     if (highest_count_added_classes == '6'):
         if (class_counts[highest_count_added_classes] >= condition_count):
 
-            # rYoloModel6 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class6.h5', compile=False)
-            # rYoloModel6.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions6 = rYoloModel6.predict(x_test_reg)
-            # rRrediction_mean6 = round(rPredictions6.mean() * 220, 2)
-            # print("Regression Value 6 : ", str(rRrediction_mean6))
+            rYoloModel6 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class6.h5', compile=False)
+            rYoloModel6.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions6 = rYoloModel6.predict(x_test_reg)
+            rRrediction_mean6 = round(rPredictions6.mean() * 220, 2)
+            print("Regression Value 6 : ", str(rRrediction_mean6))
 
-            # rYoloModel7 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class7.h5', compile=False)
-            # rYoloModel7.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions7 = rYoloModel7.predict(x_test_reg)
-            # rRrediction_mean7 = round(rPredictions7.mean() * 280, 2)
-            # print("Regression Value 7 : ", str(rRrediction_mean7), flush=True)
+            rYoloModel7 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class7.h5', compile=False)
+            rYoloModel7.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions7 = rYoloModel7.predict(x_test_reg)
+            rRrediction_mean7 = round(rPredictions7.mean() * 280, 2)
+            print("Regression Value 7 : ", str(rRrediction_mean7), flush=True)
 
-            # # Calculate the average of the two variables
-            # final_gluco_value = round((rRrediction_mean6 + rRrediction_mean7) / 2, 2)
+            # Calculate the average of the two variables
+            final_gluco_value = round((rRrediction_mean6 + rRrediction_mean7) / 2, 2)
 
-            model_filename6 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_6_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename6, "rb") as f:
-                knnModel6 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean6 = knnModel6.predict(X_test_flattened)
-            rRrediction_mean6 = np.mean(rRrediction_mean6)
-            print("Regression Value 6 KNN: ", str(rRrediction_mean6), flush=True)
+            # model_filename6 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_6_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename6, "rb") as f:
+            #     knnModel6 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean6 = knnModel6.predict(X_test_flattened)
+            # rRrediction_mean6 = np.mean(rRrediction_mean6)
+            # print("Regression Value 6 KNN: ", str(rRrediction_mean6), flush=True)
 
-            model_filename7 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_7_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename7, "rb") as f:
-                knnModel7 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean7 = knnModel7.predict(X_test_flattened)
-            rRrediction_mean7 = np.mean(rRrediction_mean7)
-            print("Regression Value 7 KNN: ", str(rRrediction_mean7), flush=True)
+            # model_filename7 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_7_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename7, "rb") as f:
+            #     knnModel7 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean7 = knnModel7.predict(X_test_flattened)
+            # rRrediction_mean7 = np.mean(rRrediction_mean7)
+            # print("Regression Value 7 KNN: ", str(rRrediction_mean7), flush=True)
 
-            # -----------------------------------------------------------
-            #                Weighted Average Calculation
-            # -----------------------------------------------------------
-            rRrediction_mean6 = predication_list_values[5] * rRrediction_mean6
-            rRrediction_mean7 = predication_list_values[6] * rRrediction_mean7
-            final_gluco_value = round((rRrediction_mean6 + rRrediction_mean7) / (predication_list_values[5] + predication_list_values[6]), 2)
+            # # -----------------------------------------------------------
+            # #                Weighted Average Calculation
+            # # -----------------------------------------------------------
+            # rRrediction_mean6 = predication_list_values[5] * rRrediction_mean6
+            # rRrediction_mean7 = predication_list_values[6] * rRrediction_mean7
+            # final_gluco_value = round((rRrediction_mean6 + rRrediction_mean7) / (predication_list_values[5] + predication_list_values[6]), 2)
 
             insert_reading = insert_gluco_value_for_patient(user,patient_id,video,final_gluco_value)
             response =  { 
@@ -625,45 +625,45 @@ def upload_video_for_patient(patient_id,video_file,user):
     if (highest_count_added_classes == '5'):
         if (class_counts[highest_count_added_classes] >= condition_count):
 
-            # rYoloModel5 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class5.h5', compile=False)
-            # rYoloModel5.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions5 = rYoloModel5.predict(x_test_reg)
-            # rRrediction_mean5 = round(rPredictions5.mean() * 180, 2)
-            # print("Regression Value 5 : ", str(rRrediction_mean5))
+            rYoloModel5 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class5.h5', compile=False)
+            rYoloModel5.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions5 = rYoloModel5.predict(x_test_reg)
+            rRrediction_mean5 = round(rPredictions5.mean() * 180, 2)
+            print("Regression Value 5 : ", str(rRrediction_mean5))
 
-            # rYoloModel6 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class6.h5', compile=False)
-            # rYoloModel6.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions6 = rYoloModel6.predict(x_test_reg)
-            # rRrediction_mean6 = round(rPredictions6.mean() * 220, 2)
-            # print("Regression Value 6 : ", str(rRrediction_mean6))
+            rYoloModel6 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class6.h5', compile=False)
+            rYoloModel6.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions6 = rYoloModel6.predict(x_test_reg)
+            rRrediction_mean6 = round(rPredictions6.mean() * 220, 2)
+            print("Regression Value 6 : ", str(rRrediction_mean6))
 
-            # # Calculate the average of the two variables
-            # final_gluco_value = round((rRrediction_mean5 + rRrediction_mean6) / 2, 2)
+            # Calculate the average of the two variables
+            final_gluco_value = round((rRrediction_mean5 + rRrediction_mean6) / 2, 2)
 
-            model_filename5 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_5_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename5, "rb") as f:
-                knnModel5 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean5 = knnModel5.predict(X_test_flattened)
-            rRrediction_mean5 = np.mean(rRrediction_mean5)
-            print("Regression Value 5 KNN: ", str(rRrediction_mean5), flush=True)
+            # model_filename5 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_5_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename5, "rb") as f:
+            #     knnModel5 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean5 = knnModel5.predict(X_test_flattened)
+            # rRrediction_mean5 = np.mean(rRrediction_mean5)
+            # print("Regression Value 5 KNN: ", str(rRrediction_mean5), flush=True)
 
-            model_filename6 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_6_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename6, "rb") as f:
-                knnModel6 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean6 = knnModel6.predict(X_test_flattened)
-            rRrediction_mean6 = np.mean(rRrediction_mean6)
-            print("Regression Value 6 KNN: ", str(rRrediction_mean6), flush=True)
+            # model_filename6 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_6_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename6, "rb") as f:
+            #     knnModel6 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean6 = knnModel6.predict(X_test_flattened)
+            # rRrediction_mean6 = np.mean(rRrediction_mean6)
+            # print("Regression Value 6 KNN: ", str(rRrediction_mean6), flush=True)
 
-            # -----------------------------------------------------------
-            #                Weighted Average Calculation
-            # -----------------------------------------------------------
-            rRrediction_mean5 = predication_list_values[4] * rRrediction_mean5
-            rRrediction_mean6 = predication_list_values[5] * rRrediction_mean6
-            final_gluco_value = round((rRrediction_mean5 + rRrediction_mean6) / (predication_list_values[4] + predication_list_values[5]), 2)
+            # # -----------------------------------------------------------
+            # #                Weighted Average Calculation
+            # # -----------------------------------------------------------
+            # rRrediction_mean5 = predication_list_values[4] * rRrediction_mean5
+            # rRrediction_mean6 = predication_list_values[5] * rRrediction_mean6
+            # final_gluco_value = round((rRrediction_mean5 + rRrediction_mean6) / (predication_list_values[4] + predication_list_values[5]), 2)
 
             insert_reading = insert_gluco_value_for_patient(user,patient_id,video,final_gluco_value)
             response =  { 
@@ -680,45 +680,45 @@ def upload_video_for_patient(patient_id,video_file,user):
     if (highest_count_added_classes == '4'):
         if (class_counts[highest_count_added_classes] >= condition_count):
 
-            # rYoloModel4 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class4.h5', compile=False)
-            # rYoloModel4.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions4 = rYoloModel4.predict(x_test_reg)
-            # rRrediction_mean4 = round(rPredictions4.mean() * 140, 2)
-            # print("Regression Value 4 : ", str(rRrediction_mean4))
+            rYoloModel4 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class4.h5', compile=False)
+            rYoloModel4.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions4 = rYoloModel4.predict(x_test_reg)
+            rRrediction_mean4 = round(rPredictions4.mean() * 140, 2)
+            print("Regression Value 4 : ", str(rRrediction_mean4))
 
-            # rYoloModel5 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class5.h5', compile=False)
-            # rYoloModel5.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions5 = rYoloModel5.predict(x_test_reg)
-            # rRrediction_mean5 = round(rPredictions5.mean() * 180, 2)
-            # print("Regression Value 5 : ", str(rRrediction_mean5))
+            rYoloModel5 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class5.h5', compile=False)
+            rYoloModel5.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions5 = rYoloModel5.predict(x_test_reg)
+            rRrediction_mean5 = round(rPredictions5.mean() * 180, 2)
+            print("Regression Value 5 : ", str(rRrediction_mean5))
 
-            # # Calculate the average of the two variables
-            # final_gluco_value = round((rRrediction_mean4 + rRrediction_mean5) / 2, 2)
+            # Calculate the average of the two variables
+            final_gluco_value = round((rRrediction_mean4 + rRrediction_mean5) / 2, 2)
 
-            model_filename4 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_4_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename4, "rb") as f:
-                knnModel4 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean4 = knnModel4.predict(X_test_flattened)
-            rRrediction_mean4 = np.mean(rRrediction_mean4)
-            print("Regression Value 4 KNN: ", str(rRrediction_mean4), flush=True)
+            # model_filename4 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_4_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename4, "rb") as f:
+            #     knnModel4 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean4 = knnModel4.predict(X_test_flattened)
+            # rRrediction_mean4 = np.mean(rRrediction_mean4)
+            # print("Regression Value 4 KNN: ", str(rRrediction_mean4), flush=True)
 
-            model_filename5 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_5_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename5, "rb") as f:
-                knnModel5 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean5 = knnModel5.predict(X_test_flattened)
-            rRrediction_mean5 = np.mean(rRrediction_mean5)
-            print("Regression Value 5 KNN: ", str(rRrediction_mean5), flush=True)
+            # model_filename5 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_5_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename5, "rb") as f:
+            #     knnModel5 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean5 = knnModel5.predict(X_test_flattened)
+            # rRrediction_mean5 = np.mean(rRrediction_mean5)
+            # print("Regression Value 5 KNN: ", str(rRrediction_mean5), flush=True)
 
-            # -----------------------------------------------------------
-            #                Weighted Average Calculation
-            # -----------------------------------------------------------
-            rRrediction_mean4 = predication_list_values[3] * rRrediction_mean4
-            rRrediction_mean5 = predication_list_values[4] * rRrediction_mean5
-            final_gluco_value = round((rRrediction_mean4 + rRrediction_mean5) / (predication_list_values[3] + predication_list_values[4]), 2)
+            # # -----------------------------------------------------------
+            # #                Weighted Average Calculation
+            # # -----------------------------------------------------------
+            # rRrediction_mean4 = predication_list_values[3] * rRrediction_mean4
+            # rRrediction_mean5 = predication_list_values[4] * rRrediction_mean5
+            # final_gluco_value = round((rRrediction_mean4 + rRrediction_mean5) / (predication_list_values[3] + predication_list_values[4]), 2)
 
             insert_reading = insert_gluco_value_for_patient(user,patient_id,video,final_gluco_value)
             response =  { 
@@ -735,45 +735,45 @@ def upload_video_for_patient(patient_id,video_file,user):
     if (highest_count_added_classes == '3'):
         if (class_counts[highest_count_added_classes] >= condition_count):
 
-            # rYoloModel3 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class3.h5', compile=False)
-            # rYoloModel3.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions3 = rYoloModel3.predict(x_test_reg)
-            # rRrediction_mean3 = round(rPredictions3.mean() * 120, 2)
-            # print("Regression Value 3 : ", str(rRrediction_mean3))
+            rYoloModel3 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class3.h5', compile=False)
+            rYoloModel3.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions3 = rYoloModel3.predict(x_test_reg)
+            rRrediction_mean3 = round(rPredictions3.mean() * 120, 2)
+            print("Regression Value 3 : ", str(rRrediction_mean3))
 
-            # rYoloModel4 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class4.h5', compile=False)
-            # rYoloModel4.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions4 = rYoloModel4.predict(x_test_reg)
-            # rRrediction_mean4 = round(rPredictions4.mean() * 140, 2)
-            # print("Regression Value 4 : ", str(rRrediction_mean4))
+            rYoloModel4 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class4.h5', compile=False)
+            rYoloModel4.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions4 = rYoloModel4.predict(x_test_reg)
+            rRrediction_mean4 = round(rPredictions4.mean() * 140, 2)
+            print("Regression Value 4 : ", str(rRrediction_mean4))
 
-            # # Calculate the average of the two variables
-            # final_gluco_value = round((rRrediction_mean3 + rRrediction_mean4) / 2, 2)
+            # Calculate the average of the two variables
+            final_gluco_value = round((rRrediction_mean3 + rRrediction_mean4) / 2, 2)
 
-            model_filename3 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_3_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename3, "rb") as f:
-                knnModel3 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean3 = knnModel3.predict(X_test_flattened)
-            rRrediction_mean3 = np.mean(rRrediction_mean3)
-            print("Regression Value 3 KNN: ", str(rRrediction_mean3), flush=True)
+            # model_filename3 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_3_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename3, "rb") as f:
+            #     knnModel3 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean3 = knnModel3.predict(X_test_flattened)
+            # rRrediction_mean3 = np.mean(rRrediction_mean3)
+            # print("Regression Value 3 KNN: ", str(rRrediction_mean3), flush=True)
 
-            model_filename4 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_4_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename4, "rb") as f:
-                knnModel4 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean4 = knnModel4.predict(X_test_flattened)
-            rRrediction_mean4 = np.mean(rRrediction_mean4)
-            print("Regression Value 4 KNN: ", str(rRrediction_mean4), flush=True)
+            # model_filename4 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_4_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename4, "rb") as f:
+            #     knnModel4 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean4 = knnModel4.predict(X_test_flattened)
+            # rRrediction_mean4 = np.mean(rRrediction_mean4)
+            # print("Regression Value 4 KNN: ", str(rRrediction_mean4), flush=True)
 
-            # -----------------------------------------------------------
-            #                Weighted Average Calculation
-            # -----------------------------------------------------------
-            rRrediction_mean3 = predication_list_values[2] * rRrediction_mean3
-            rRrediction_mean4 = predication_list_values[3] * rRrediction_mean4
-            final_gluco_value = round((rRrediction_mean3 + rRrediction_mean4) / (predication_list_values[2] + predication_list_values[3]), 2)
+            # # -----------------------------------------------------------
+            # #                Weighted Average Calculation
+            # # -----------------------------------------------------------
+            # rRrediction_mean3 = predication_list_values[2] * rRrediction_mean3
+            # rRrediction_mean4 = predication_list_values[3] * rRrediction_mean4
+            # final_gluco_value = round((rRrediction_mean3 + rRrediction_mean4) / (predication_list_values[2] + predication_list_values[3]), 2)
 
             insert_reading = insert_gluco_value_for_patient(user,patient_id,video,final_gluco_value)
             response =  { 
@@ -790,45 +790,45 @@ def upload_video_for_patient(patient_id,video_file,user):
     if (highest_count_added_classes == '2'):
         if (class_counts[highest_count_added_classes] >= condition_count):
 
-            # rYoloModel2 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class2.h5', compile=False)
-            # rYoloModel2.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions2 = rYoloModel2.predict(x_test_reg)
-            # rRrediction_mean2 = round(rPredictions2.mean() * 100, 2)
-            # print("Regression Value 2 : ", str(rRrediction_mean2))
+            rYoloModel2 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class2.h5', compile=False)
+            rYoloModel2.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions2 = rYoloModel2.predict(x_test_reg)
+            rRrediction_mean2 = round(rPredictions2.mean() * 100, 2)
+            print("Regression Value 2 : ", str(rRrediction_mean2))
 
-            # rYoloModel3 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class3.h5', compile=False)
-            # rYoloModel3.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions3 = rYoloModel3.predict(x_test_reg)
-            # rRrediction_mean3 = round(rPredictions3.mean() * 120, 2)
-            # print("Regression Value 3 : ", str(rRrediction_mean3))
+            rYoloModel3 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class3.h5', compile=False)
+            rYoloModel3.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions3 = rYoloModel3.predict(x_test_reg)
+            rRrediction_mean3 = round(rPredictions3.mean() * 120, 2)
+            print("Regression Value 3 : ", str(rRrediction_mean3))
 
-            # # Calculate the average of the two variables
-            # final_gluco_value = round((rRrediction_mean2 + rRrediction_mean3) / 2, 2)
+            # Calculate the average of the two variables
+            final_gluco_value = round((rRrediction_mean2 + rRrediction_mean3) / 2, 2)
 
-            model_filename2 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_2_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename2, "rb") as f:
-                knnModel2 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean2 = knnModel2.predict(X_test_flattened)
-            rRrediction_mean2 = np.mean(rRrediction_mean2)
-            print("Regression Value 2 KNN: ", str(rRrediction_mean2), flush=True)
+            # model_filename2 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_2_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename2, "rb") as f:
+            #     knnModel2 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean2 = knnModel2.predict(X_test_flattened)
+            # rRrediction_mean2 = np.mean(rRrediction_mean2)
+            # print("Regression Value 2 KNN: ", str(rRrediction_mean2), flush=True)
 
-            model_filename3 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_3_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename3, "rb") as f:
-                knnModel3 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean3 = knnModel3.predict(X_test_flattened)
-            rRrediction_mean3 = np.mean(rRrediction_mean3)
-            print("Regression Value 3 KNN: ", str(rRrediction_mean3), flush=True)
+            # model_filename3 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_3_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename3, "rb") as f:
+            #     knnModel3 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean3 = knnModel3.predict(X_test_flattened)
+            # rRrediction_mean3 = np.mean(rRrediction_mean3)
+            # print("Regression Value 3 KNN: ", str(rRrediction_mean3), flush=True)
 
-            # -----------------------------------------------------------
-            #                Weighted Average Calculation
-            # -----------------------------------------------------------
-            rRrediction_mean2 = predication_list_values[1] * rRrediction_mean2
-            rRrediction_mean3 = predication_list_values[2] * rRrediction_mean3
-            final_gluco_value = round((rRrediction_mean2 + rRrediction_mean3) / (predication_list_values[1] + predication_list_values[2]), 2)
+            # # -----------------------------------------------------------
+            # #                Weighted Average Calculation
+            # # -----------------------------------------------------------
+            # rRrediction_mean2 = predication_list_values[1] * rRrediction_mean2
+            # rRrediction_mean3 = predication_list_values[2] * rRrediction_mean3
+            # final_gluco_value = round((rRrediction_mean2 + rRrediction_mean3) / (predication_list_values[1] + predication_list_values[2]), 2)
 
             insert_reading = insert_gluco_value_for_patient(user,patient_id,video,final_gluco_value)
             response =  { 
@@ -845,45 +845,45 @@ def upload_video_for_patient(patient_id,video_file,user):
     if (highest_count_added_classes == '1'):
         if (class_counts[highest_count_added_classes] >= condition_count):
 
-            # rYoloModel1 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class1.h5', compile=False)
-            # rYoloModel1.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions1 = rYoloModel1.predict(x_test_reg)
-            # rRrediction_mean1 = round(rPredictions1.mean() * 80, 2)
-            # print("Regression Value 1 : ", str(rRrediction_mean1))
+            rYoloModel1 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class1.h5', compile=False)
+            rYoloModel1.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions1 = rYoloModel1.predict(x_test_reg)
+            rRrediction_mean1 = round(rPredictions1.mean() * 80, 2)
+            print("Regression Value 1 : ", str(rRrediction_mean1))
 
-            # rYoloModel2 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class2.h5', compile=False)
-            # rYoloModel2.compile(optimizer='adam', loss='mean_squared_error')
-            # rPredictions2 = rYoloModel2.predict(x_test_reg)
-            # rRrediction_mean2 = round(rPredictions2.mean() * 100, 2)
-            # print("Regression Value 2 : ", str(rRrediction_mean2))
+            rYoloModel2 = load_model('/home/gqrp1_preprod/gqrp1_preprod/models/resnetV3normalizedrevised_class2.h5', compile=False)
+            rYoloModel2.compile(optimizer='adam', loss='mean_squared_error')
+            rPredictions2 = rYoloModel2.predict(x_test_reg)
+            rRrediction_mean2 = round(rPredictions2.mean() * 100, 2)
+            print("Regression Value 2 : ", str(rRrediction_mean2))
 
-            # # Calculate the average of the two variables
-            # final_gluco_value = round((rRrediction_mean1 + rRrediction_mean2) / 2, 2)
+            # Calculate the average of the two variables
+            final_gluco_value = round((rRrediction_mean1 + rRrediction_mean2) / 2, 2)
 
-            model_filename2 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_2_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename2, "rb") as f:
-                knnModel2 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean2 = knnModel2.predict(X_test_flattened)
-            rRrediction_mean2 = np.mean(rRrediction_mean2)
-            print("Regression Value 2 KNN: ", str(rRrediction_mean2), flush=True)
+            # model_filename2 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_2_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename2, "rb") as f:
+            #     knnModel2 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean2 = knnModel2.predict(X_test_flattened)
+            # rRrediction_mean2 = np.mean(rRrediction_mean2)
+            # print("Regression Value 2 KNN: ", str(rRrediction_mean2), flush=True)
 
-            model_filename3 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_3_v2_final_k1_full.pkl'
-            # Load the model from the file using pickle
-            with open(model_filename3, "rb") as f:
-                knnModel3 = pickle.load(f)
-            X_test_flattened = [hist.flatten() for hist in x_test]
-            rRrediction_mean3 = knnModel3.predict(X_test_flattened)
-            rRrediction_mean3 = np.mean(rRrediction_mean3)
-            print("Regression Value 3 KNN: ", str(rRrediction_mean3), flush=True)
+            # model_filename3 = '/home/gqrp1_preprod/gqrp1_preprod/models/knn_class_3_v2_final_k1_full.pkl'
+            # # Load the model from the file using pickle
+            # with open(model_filename3, "rb") as f:
+            #     knnModel3 = pickle.load(f)
+            # X_test_flattened = [hist.flatten() for hist in x_test]
+            # rRrediction_mean3 = knnModel3.predict(X_test_flattened)
+            # rRrediction_mean3 = np.mean(rRrediction_mean3)
+            # print("Regression Value 3 KNN: ", str(rRrediction_mean3), flush=True)
 
-            # -----------------------------------------------------------
-            #                Weighted Average Calculation
-            # -----------------------------------------------------------
-            rRrediction_mean2 = predication_list_values[1] * rRrediction_mean2
-            rRrediction_mean3 = predication_list_values[2] * rRrediction_mean3
-            final_gluco_value = round((rRrediction_mean2 + rRrediction_mean3) / (predication_list_values[1] + predication_list_values[2]), 2)
+            # # -----------------------------------------------------------
+            # #                Weighted Average Calculation
+            # # -----------------------------------------------------------
+            # rRrediction_mean2 = predication_list_values[1] * rRrediction_mean2
+            # rRrediction_mean3 = predication_list_values[2] * rRrediction_mean3
+            # final_gluco_value = round((rRrediction_mean2 + rRrediction_mean3) / (predication_list_values[1] + predication_list_values[2]), 2)
 
             insert_reading = insert_gluco_value_for_patient(user,patient_id,video,final_gluco_value)
             response =  { 
