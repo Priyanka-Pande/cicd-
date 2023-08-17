@@ -1,0 +1,14 @@
+.
+.
+SECRET_KEY=django-insecure-so^0o103rsxm=&bx48kg(12_-tmksjn^oy&6z6u6ut!=@x)w@n
+DEBUG=True
+DATABASE_NAME=gqrp1_preprod
+DATABASE_USER=gqrp1_preprod
+DATABASE_PASS=kk^L~nXdrt4T9l<4
+DATABASE_ENGINE=django.db.backends.postgresql
+DATABASE_HOST=10.125.48.2
+DATABASE_PORT=5432
+GS_BUCKET_NAME=glucoqr-p1-preprod
+GS_PROJECT_ID=glucoqr
+DEFAULT_FILE_STORAGE=storages.backends.gcloud.GoogleCloudStorage
+
