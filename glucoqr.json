@@ -1,13 +1,13 @@
 {
 "type": "service_account",
-  "project_id": "glucoqr",
-  "private_key_id": "baff2fb7ba02c5deb2d05c8f258a3e76ddce7e0b",
-  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCqmIfJqG5dpeWc\njJ1TZ87PY39xXMymlVhnYW04rRveMbg9pGiErXm2iyn6Ea0UyXQwcw8Gf2MNZqno\nLZ3m5sHlYFK8OQjP6Zy0CI2wrV/rUXINqjcwvJGpppfhrMSHs9T/k7WJpTiOk8gW\nylHHF70H5Ok+JZjI0V0k+dzEdo0GGvN018AlqP23Jri3r3+N9QQPltt41li4EmvH\nmUR1W5hjIIeanZhF6NI2AIxLA5yu/6YN2n5+bOJKHZyslsiC9fYYF24n68JYmpNR\nGnhmhKERbKgFtEwA9bLoYwepQCis3grto4tbk24kjIApnElOq1jqEPcX5z75byCh\nFqNOr0dVAgMBAAECggEAAWjYOmDTZJ+xyXzZ8e36JfmG/ItNP5UdUWFbMywu/kN/\n57Z7jJkYV9tHggLyYKkXdi0FM0MLMPmnrrztwJIoiPomRNrdyUX/XvdxIEQWdk3K\nePVulk8AjxvKxnkUeKCSQnhYeCYu1PLApPuP+GqoS6/nA3XxELu2Hs+XtOHb4XCF\nFELuvd0lrEv/K2C2+MiA8pQx/d7w6V3kWTKuwHzbSoiC3lyniAI3sgCL0SByIMEI\nBGtLAe18z/Rf9F/ZXwj5+DqTa3+Rt1TeJ1aqfdk7DRYq5WVq5ops/fQ+OKEBvgcx\nvwgiec9mRUeDNSNvi//Vc91alTiPvZ4I7JP3TMHlkQKBgQDxMwzTiJ2JjYRsHj9s\naEwNtpStJmLyQxUz6Vkt68yc/Le6QBVovYbhlkLYTXvAKx92y1kNPjxyBeu1Ok0n\n/y+wRqD6aiuCz8LUhYFjdJMPBHcHe9etQ3EOqJpB/wntf8SRIrPuthvzKKNHcSY+\npKIfk4Ipmdnr4bt7WKXtf6DECQKBgQC1EGI0zkOx4mc4VHguzfl1ezdVSyef/QAw\nf3J19Fnmpo/Z8Rhtn6qmD29PcmoxhIJzH9jwFSuY84AwXsLGJ2v5IkiGJNFnDpgq\nfLtv8darqoWXSiCOr6dfwXIsjQd9HBwuwNPzqRJFej2dlWi3fS4fPhDWM/8o7q16\n6uK0DGwz7QKBgQC1EdzsJGAXtkyWGfMFABswJEPi5LFdK20MZn5TUfRuWe3XfWpV\nEgri6TnPRgPD1NuvA6MbpQAdnUJA776iaxky3SLWOsPlVPDvODZVIluP54sv7BGS\nedGy7nG3X63lRIidaA7qAn5jAbvp0xCh8FfhGoyZjG0jfnePdpJCBBD9eQKBgG6Q\nQZfDOF0gRi2Ejxrtld3iTsibquesI3h56pgSjO8mWIMaEPOn4xmiJTNbR3NTWiEY\nmm0IUGYGkwl2Y/OCURGBmM2pH+GRbOPM5NwXziFncEoQ7s6Sfl8fjiucNq10A9Wc\n1BBe9pRMb+GRQa+CFi7nxHo4qCADlxWO5r5RM6WFAoGBALof8xWls7RPbA0gCPKa\njLxTxKBJqmvL8Rx17DQJClJJZv3mKKMCUZEsjUZ5x4P//atEevzxc9PfIStCoBhE\n31b5yTcVTXJUjFDycJaZwgkWxqHi8CxMJIJ1tsYdpZg7I7zOj8+9LI83CpacEqOb\n0IKqZNjVepBS8h79XfCXIus1\n-----END PRIVATE KEY-----\n",
-  "client_email": "glucoqr-p1-preprod@glucoqr.iam.gserviceaccount.com",
-  "client_id": "117451861184162791836",
-  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
-  "token_uri": "https://oauth2.googleapis.com/token",
-  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
-  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/glucoqr-p1-preprod%40glucoqr.iam.gserviceaccount.com",
-  "universe_domain": "googleapis.com"
+"project_id": "glucoqr",
+"private_key_id": "baff2fb7ba02c5deb2d05c8f258a3e76ddce7e0b",
+"private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQCqmIfJqG5dpeWc\njJ1TZ87PY39xXMymlVhnYW04rRveMbg9pGiErXm2iyn6Ea0UyXQwcw8Gf2MNZqno\nLZ3m5sHlYFK8OQjP6Zy0CI2wrV/rUXINqjcwvJGpppfhrMSHs9T/k7WJpTiOk8gW\nylHHF70H5Ok+JZjI0V0k+dzEdo0GGvN018AlqP23Jri3r3+N9QQPltt41li4EmvH\nmUR1W5hjIIeanZhF6NI2AIxLA5yu/6YN2n5+bOJKHZyslsiC9fYYF24n68JYmpNR\nGnhmhKERbKgFtEwA9bLoYwepQCis3grto4tbk24kjIApnElOq1jqEPcX5z75byCh\nFqNOr0dVAgMBAAECggEAAWjYOmDTZJ+xyXzZ8e36JfmG/ItNP5UdUWFbMywu/kN/\n57Z7jJkYV9tHggLyYKkXdi0FM0MLMPmnrrztwJIoiPomRNrdyUX/XvdxIEQWdk3K\nePVulk8AjxvKxnkUeKCSQnhYeCYu1PLApPuP+GqoS6/nA3XxELu2Hs+XtOHb4XCF\nFELuvd0lrEv/K2C2+MiA8pQx/d7w6V3kWTKuwHzbSoiC3lyniAI3sgCL0SByIMEI\nBGtLAe18z/Rf9F/ZXwj5+DqTa3+Rt1TeJ1aqfdk7DRYq5WVq5ops/fQ+OKEBvgcx\nvwgiec9mRUeDNSNvi//Vc91alTiPvZ4I7JP3TMHlkQKBgQDxMwzTiJ2JjYRsHj9s\naEwNtpStJmLyQxUz6Vkt68yc/Le6QBVovYbhlkLYTXvAKx92y1kNPjxyBeu1Ok0n\n/y+wRqD6aiuCz8LUhYFjdJMPBHcHe9etQ3EOqJpB/wntf8SRIrPuthvzKKNHcSY+\npKIfk4Ipmdnr4bt7WKXtf6DECQKBgQC1EGI0zkOx4mc4VHguzfl1ezdVSyef/QAw\nf3J19Fnmpo/Z8Rhtn6qmD29PcmoxhIJzH9jwFSuY84AwXsLGJ2v5IkiGJNFnDpgq\nfLtv8darqoWXSiCOr6dfwXIsjQd9HBwuwNPzqRJFej2dlWi3fS4fPhDWM/8o7q16\n6uK0DGwz7QKBgQC1EdzsJGAXtkyWGfMFABswJEPi5LFdK20MZn5TUfRuWe3XfWpV\nEgri6TnPRgPD1NuvA6MbpQAdnUJA776iaxky3SLWOsPlVPDvODZVIluP54sv7BGS\nedGy7nG3X63lRIidaA7qAn5jAbvp0xCh8FfhGoyZjG0jfnePdpJCBBD9eQKBgG6Q\nQZfDOF0gRi2Ejxrtld3iTsibquesI3h56pgSjO8mWIMaEPOn4xmiJTNbR3NTWiEY\nmm0IUGYGkwl2Y/OCURGBmM2pH+GRbOPM5NwXziFncEoQ7s6Sfl8fjiucNq10A9Wc\n1BBe9pRMb+GRQa+CFi7nxHo4qCADlxWO5r5RM6WFAoGBALof8xWls7RPbA0gCPKa\njLxTxKBJqmvL8Rx17DQJClJJZv3mKKMCUZEsjUZ5x4P//atEevzxc9PfIStCoBhE\n31b5yTcVTXJUjFDycJaZwgkWxqHi8CxMJIJ1tsYdpZg7I7zOj8+9LI83CpacEqOb\n0IKqZNjVepBS8h79XfCXIus1\n-----END PRIVATE KEY-----\n",
+"client_email": "glucoqr-p1-preprod@glucoqr.iam.gserviceaccount.com",
+"client_id": "117451861184162791836",
+"auth_uri": "https://accounts.google.com/o/oauth2/auth",
+"token_uri": "https://oauth2.googleapis.com/token",
+"auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+"client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/glucoqr-p1-preprod%40glucoqr.iam.gserviceaccount.com",
+"universe_domain": "googleapis.com"
 }
